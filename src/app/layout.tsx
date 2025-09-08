@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
-import { DM_Sans } from 'next/font/google';
+import { DM_Sans, Roboto } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-dm-sans',
+});
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  variable: '--font-roboto',
 });
 
 export const metadata: Metadata = {
@@ -19,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${dmSans.variable} ${roboto.variable} antialiased`}>
         <ThemeProvider
           defaultTheme="dark"
           attribute="class"
