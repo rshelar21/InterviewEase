@@ -44,7 +44,7 @@
   --text-primary: var(--text-primary);
   --text-secondary: var(--text-secondary);
   --text-muted: var(--text-muted);
-  --surface: var(--surface);
+  --color-surface: var(--surface);
 }
 
 :root {
@@ -121,7 +121,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --background: #0e0e13;
-  --surface: #1e293b;
+  /* --surface: #1e293b;   */
+  --surface: #1F1F23;
   --border: #2a2a35;
   --text-primary: #f5f7fa;
   --text-secondary: #c3c8d1;

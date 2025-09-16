@@ -1,4 +1,3 @@
-// 'use client';
 import {
   Card,
   CardContent,
@@ -8,7 +7,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Briefcase, Github, Mail, Target, Users } from 'lucide-react';
-// import { userSignIn } from '@/actions/userSignIn';
+
 import { signIn } from '@/lib/auth';
 
 const AuthPage = async () => {

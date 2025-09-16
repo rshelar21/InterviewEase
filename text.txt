@@ -1,0 +1,111 @@
+schedule next meeting
+import JD - seperate page - list down all company
+add notes page - same as interview notes
+
+set goal - target 
+notification icon
+
+// prisma setup
+first install prisma
+npx prisma init
+
+npx prisma migrate dev --schema=src/prisma/schema.prisma --name init or npm run prisma migrate dev -- --name init
+
+// Test Connection Before Running Migration
+npx prisma db pull --schema=src/prisma/schema.prisma or npx prisma migrate dev --schema=src/prisma/schema.prisma --name init
+
+const interviews = [
+  {
+    id: 1,
+    title: 'Senior Frontend Developer',
+    company: 'TechCorp Inc.',
+    location: 'San Francisco, CA',
+    date: '2024-01-15',
+    time: '2:00 PM',
+    status: 'scheduled',
+    difficulty: 'Senior',
+    type: 'Technical',
+    rating: 4.5,
+    logo: '/abstract-tech-logo.png',
+    description:
+      'Technical interview focusing on React, TypeScript, and system design. Prepare for coding challenges and architectural discussions.',
+  },
+  {
+    id: 2,
+    title: 'Product Manager',
+    company: 'StartupXYZ',
+    location: 'Remote',
+    date: '2024-01-18',
+    time: '10:00 AM',
+    status: 'completed',
+    difficulty: 'Mid-level',
+    type: 'Behavioral',
+    rating: 4.2,
+    logo: '/abstract-startup-logo.png',
+    description:
+      'Product strategy and leadership interview. Focus on product roadmap, stakeholder management, and data-driven decisions.',
+  },
+  {
+    id: 3,
+    title: 'UX Designer',
+    company: 'DesignStudio',
+    location: 'New York, NY',
+    date: '2024-01-20',
+    time: '3:30 PM',
+    status: 'in-progress',
+    difficulty: 'Mid-level',
+    type: 'Portfolio Review',
+    rating: 4.8,
+    logo: '/design-studio-logo.png',
+    description:
+      'Portfolio presentation and design thinking process. Prepare case studies and be ready to discuss design decisions.',
+  },
+  {
+    id: 4,
+    title: 'Data Scientist',
+    company: 'AI Innovations',
+    location: 'Boston, MA',
+    date: '2024-01-22',
+    time: '11:00 AM',
+    status: 'scheduled',
+    difficulty: 'Senior',
+    type: 'Technical',
+    rating: 4.0,
+    logo: '/ai-company-logo.png',
+    description:
+      'Machine learning and statistical analysis interview. Expect questions on algorithms, model evaluation, and data preprocessing.',
+  },
+  {
+    id: 5,
+    title: 'Marketing Director',
+    company: 'GrowthCo',
+    location: 'Austin, TX',
+    date: '2024-01-25',
+    time: '1:00 PM',
+    status: 'scheduled',
+    difficulty: 'Senior',
+    type: 'Strategic',
+    rating: 4.3,
+    logo: '/marketing-company-logo.png',
+    description:
+      'Strategic marketing leadership role. Focus on growth strategies, team management, and campaign optimization.',
+  },
+  {
+    id: 6,
+    title: 'DevOps Engineer',
+    company: 'CloudTech',
+    location: 'Seattle, WA',
+    date: '2024-01-28',
+    time: '4:00 PM',
+    status: 'draft',
+    difficulty: 'Mid-level',
+    type: 'Technical',
+    rating: 4.1,
+    logo: '/cloud-technology-logo.jpg',
+    description:
+      'Infrastructure and deployment pipeline interview. Prepare for questions on AWS, Docker, Kubernetes, and CI/CD.',
+  },
+];
+
+
+ 
