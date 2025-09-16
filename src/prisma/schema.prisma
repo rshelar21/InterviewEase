@@ -20,6 +20,7 @@ model User {
   Authenticator Authenticator[]
   Interview     Interview[]
   sessions      Session[]
+  Reusme        Reusme?
 }
 
 model Account {
@@ -120,4 +121,13 @@ enum InterviewStaus {
   IN_PROGRESS
   COMPLETED
   SCHEDULED
+}
+
+model Reusme {
+  id        String  @id @default(uuid())
+  name      String
+  resumeUrl String
+  userId    String  @unique
+  content   Json
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

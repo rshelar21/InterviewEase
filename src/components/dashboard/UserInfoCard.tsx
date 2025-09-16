@@ -1,6 +1,6 @@
 import { getUser } from '@/api/user/getUser';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Settings, User } from 'lucide-react';
+import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -60,14 +60,18 @@ export const UserInfoCard = async () => {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-red-600">
-            <div>
+            <div className="w-full">
               <form
                 action={async () => {
                   'use server';
                   await signOut({ redirectTo: '/' });
                 }}
               >
-                <Button type="submit" variant="text" className="">
+                <Button
+                  type="submit"
+                  className="h-fit bg-transparent px-0 py-0 text-red-500 hover:bg-transparent has-[>svg]:px-0"
+                >
+                  <LogOut className="mr-2 h-4 w-4 px-0 text-red-500" />
                   Sign out
                 </Button>
               </form>

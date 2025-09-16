@@ -130,7 +130,6 @@ export function CreateInterviewDialog({
     }
 
     try {
-      console.log(form.getValues());
       if (data?.id) {
         await updateInterview(data?.id, form.getValues() as Interview);
         toast.success('Interview Details Updated!');
@@ -151,9 +150,6 @@ export function CreateInterviewDialog({
   const prevStep = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
-
-  console.log(form.formState.errors);
-  console.log(form.getValues());
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
