@@ -1,3 +1,5 @@
+import { InterviewType } from '@/types';
+
 export const statusConfig = {
   SCHEDULED: {
     label: 'Scheduled',
@@ -33,7 +35,7 @@ export const difficultyConfig = {
   },
 };
 
-export const interviewTypeConfig = {
+export const interviewTypeConfig: Record<InterviewType, { label: string }> = {
   TECHNICAL: {
     label: 'Technical',
   },

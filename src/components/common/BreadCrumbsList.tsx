@@ -37,14 +37,14 @@ export const BreadCrumbsList = ({
               );
             }
             return (
-              <>
-                <BreadcrumbItem key={index}>
+              <React.Fragment key={index}>
+                <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link href={item?.href}>{item?.label}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-              </>
+              </React.Fragment>
             );
           })}
         </BreadcrumbList>

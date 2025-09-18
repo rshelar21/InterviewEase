@@ -14,7 +14,7 @@ export const ThemeToogle = () => {
   const { theme, setTheme } = useTheme();
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Button
           variant="ghost"
           size="sm"

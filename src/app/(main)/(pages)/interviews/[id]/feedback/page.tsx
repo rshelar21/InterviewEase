@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 import { BreadCrumbsList, CommonTooltip } from '@/components/common';
 import { interviewTypeConfig } from '@/utils';
 import { APP_ROUTES } from '@/constants';
-import { CategoryScore } from '@/types';
+import { CategoryScore, InterviewType } from '@/types';
 const FeedbackPage = async ({
   params,
 }: {
@@ -75,6 +75,9 @@ const FeedbackPage = async ({
     return icon;
   };
 
+  const interviewType =
+    (feedback?.Interview?.interviewType as InterviewType) || 'TECHNICAL';
+
   return (
     <div className="py-10">
       <BreadCrumbsList
@@ -121,12 +124,7 @@ const FeedbackPage = async ({
                     <CommonTooltip title="Interview Type">
                       <div className="flex items-center gap-2">
                         <Target className="h-4 w-4" />
-                        {
-                          interviewTypeConfig[
-                            feedback?.Interview?.interviewType || 'TECHNICAL'
-                          ].label
-                        }{' '}
-                        Interview
+                        {interviewTypeConfig[interviewType].label} Interview
                       </div>
                     </CommonTooltip>
                   </div>
