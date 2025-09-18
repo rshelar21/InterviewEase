@@ -3,7 +3,7 @@ import { APP_ROUTES, menuItems } from '@/constants';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { MenuItem } from '@/types';
-import { HelpCircle, Settings } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
@@ -68,14 +68,14 @@ export const Sidebar = () => {
 
         <div className="border-border border-t px-2 py-4">
           <div className="space-y-1.5">
-            <NavItem
+            {/* <NavItem
               item={{
                 id: 'settings',
                 label: 'Settings',
                 href: '/settings',
                 icon: Settings,
               }}
-            />
+            /> */}
             <NavItem
               item={{
                 id: 'help',

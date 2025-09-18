@@ -7,7 +7,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { HelpCircle, Settings, SquareChevronRight } from 'lucide-react';
+import { HelpCircle, SquareChevronRight } from 'lucide-react';
 import { menuItems } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { NavItem } from './Sidebar';
@@ -36,14 +36,14 @@ export const SidebarSheet = ({ onOpenChange, open }: Props) => {
 
           <div className="border-border border-t px-2 py-4">
             <div className="space-y-1.5">
-              <NavItem
+              {/* <NavItem
                 item={{
                   id: 'settings',
                   label: 'Settings',
                   href: '/settings',
                   icon: Settings,
                 }}
-              />
+              /> */}
               <NavItem
                 item={{
                   id: 'help',

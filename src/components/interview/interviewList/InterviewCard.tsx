@@ -29,61 +29,15 @@ import { APP_ROUTES } from '@/constants';
 import { Interview } from '@/types';
 import { deleteInterview } from '@/actions';
 import { useQueryClient } from '@tanstack/react-query';
-import { formatDateOnly, formatTimeOnly } from '@/utils';
+import { formatDateOnly } from '@/utils';
 import { TruncateText } from '@/components/common';
+import { CommonTooltip } from '@/components/common';
+import { difficultyConfig, statusConfig, interviewTypeConfig } from '@/utils';
 
 interface InterviewCardProps {
   interview: Interview;
   onOpenEditInterview: (data: Interview) => void;
 }
-
-const statusConfig = {
-  SCHEDULED: {
-    label: 'Scheduled',
-    variant: 'default' as const,
-    color: 'bg-blue-500',
-  },
-  COMPLETED: {
-    label: 'Completed',
-    variant: 'secondary' as const,
-    color: 'bg-green-500',
-  },
-  IN_PROGRESS: {
-    label: 'In Progress',
-    variant: 'destructive' as const,
-    color: 'bg-amber-500',
-  },
-  DRAFT: { label: 'Draft', variant: 'outline' as const, color: 'bg-gray-400' },
-};
-
-const difficultyConfig = {
-  ENTRY_LEVEL: {
-    color: 'bg-green-100 text-green-800 border-green-200',
-    label: 'Entry Level',
-  },
-  MID_LEVEL: {
-    color: 'bg-amber-100 text-amber-800 border-amber-200',
-    label: 'Mid Level',
-  },
-  SENIOR: { color: 'bg-red-100 text-red-800 border-red-200', label: 'Senior' },
-  PRINCIPAL: {
-    color: 'bg-orange-100 text-orange-800 border-orange-200',
-    label: 'Principal',
-  },
-};
-
-const interviewTypeConfig = {
-  TECHNICAL: {
-    label: 'Technical',
-  },
-  BEHAVIORAL: {
-    label: 'Behavioral',
-  },
-  SYSTEM_DESIGN: { label: 'System Design' },
-  CULTURAL_FIT: {
-    label: 'Cultural Fit',
-  },
-};
 
 export const InterviewCard = ({
   interview,
@@ -131,17 +85,14 @@ export const InterviewCard = ({
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  // className="h-8 w-8 p-0 opacity-0 transition-opacity group-hover:opacity-100"
-                >
+                <Button variant="ghost" size="sm">
                   <MoreHorizontal className="h-6 w-6" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   className="gap-2"
+                  disabled={interview.status === 'COMPLETED'}
                   onClick={async (e) => {
                     e.stopPropagation();
                     onOpenEditInterview(interview);
@@ -152,7 +103,7 @@ export const InterviewCard = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="gap-2"
-                  disabled={interview.status !== 'DRAFT'}
+                  disabled={interview.status === 'COMPLETED'}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDelete();
@@ -206,16 +157,24 @@ export const InterviewCard = ({
 
           <div className="space-y-2 text-sm">
             <div className="text-muted-foreground flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              {interview.scheduleLater &&
-                interview?.scheduledDate &&
-                formatDateOnly(interview?.scheduledDate)}
-              {!interview.scheduleLater &&
-                interview?.createdAt &&
-                formatDateOnly(interview?.createdAt)}
-              <Clock className="ml-2 h-4 w-4" />
+              <CommonTooltip title="Interview Date">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  {interview.scheduleLater &&
+                    interview?.scheduledDate &&
+                    formatDateOnly(interview?.scheduledDate)}
+                  {!interview.scheduleLater &&
+                    interview?.createdAt &&
+                    formatDateOnly(interview?.createdAt)}
+                </div>
+              </CommonTooltip>
 
-              {formatTimeOnly(interview?.createdAt)}
+              <CommonTooltip title="Interview Duration">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  {interview?.duration || '00:00'} min
+                </div>
+              </CommonTooltip>
             </div>
           </div>
 

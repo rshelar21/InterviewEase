@@ -15,19 +15,13 @@ import { cn } from '@/lib/utils';
 import { createFeedback } from '@/actions';
 import { toast } from 'sonner';
 import { formatTimer } from '@/utils';
+import { CallStatus } from '@/types';
 
 interface InterviewSectionProps {
   interviewData: Interview | null;
   userName: string;
   userImg: string;
   userId: string;
-}
-
-enum CallStatus {
-  INACTIVE = 'INACTIVE',
-  CONNECTING = 'CONNECTING',
-  ACTIVE = 'ACTIVE',
-  FINISHED = 'FINISHED',
 }
 
 interface SendMessage {
@@ -45,12 +39,13 @@ export const InterviewSection = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SendMessage[]>([]);
-
   const [sessionTime, setSessionTime] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     let timer: any;
+
     if (callStatus === CallStatus.ACTIVE) {
       timer = setInterval(() => {
         setSessionTime((prev) => prev + 1);
@@ -136,6 +131,12 @@ export const InterviewSection = ({
     vapi.stop();
   };
 
+  const handleToggleMute = () => {
+    const newMutedState = !isMuted;
+    vapi.setMuted(newMutedState);
+    setIsMuted(newMutedState);
+  };
+
   const latestMessage = messages[messages.length - 1]?.content;
 
   // const handlegenGenFeed = async () => {
@@ -179,12 +180,7 @@ export const InterviewSection = ({
             </div>
 
             <div className="col-span-1">
-              <Card
-                className={cn(
-                  'cursor-pointer gap-4 py-6 md:py-12',
-                  isSpeaking && 'shadow-border border-gray-600 shadow-md'
-                )}
-              >
+              <Card className={cn('cursor-pointer gap-4 py-6 md:py-12')}>
                 <div className="bg-background mx-auto h-fit w-fit rounded-full p-4 md:p-6">
                   <Avatar className="size-12 md:size-16">
                     <AvatarImage
@@ -214,6 +210,8 @@ export const InterviewSection = ({
           onDisconnectCall={handleDisconnectCall}
           callStatus={callStatus}
           onCallStart={handleCallStart}
+          handleToggleMute={handleToggleMute}
+          isMuted={isMuted}
         />
       </div>
     </div>

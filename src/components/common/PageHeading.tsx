@@ -1,18 +1,10 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import Link from 'next/link';
+import { BreadCrumbsList } from './BreadCrumbsList';
 
 interface Props {
   title: string | React.ReactNode;
-  subTitle: string | React.ReactNode;
+  subTitle?: string | React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
   breadcrumbs?: {
@@ -30,35 +22,7 @@ export const PageHeading = ({
 }: Props) => {
   return (
     <div className="pt-10 pb-10">
-      {!!breadcrumbs?.length && (
-        <div className="py-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              {breadcrumbs?.map((item, index) => {
-                const isLast = breadcrumbs?.length - 1 === index;
-
-                if (isLast) {
-                  return (
-                    <BreadcrumbItem key={index}>
-                      <BreadcrumbPage>{item?.label}</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  );
-                }
-                return (
-                  <>
-                    <BreadcrumbItem key={index}>
-                      <BreadcrumbLink asChild>
-                        <Link href={item?.href}>{item?.label}</Link>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                  </>
-                );
-              })}
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      )}
+      {!!breadcrumbs?.length && <BreadCrumbsList breadcrumbs={breadcrumbs} />}
       <div className={cn('flex justify-between', className)}>
         <div>
           {typeof title === 'string' ? (

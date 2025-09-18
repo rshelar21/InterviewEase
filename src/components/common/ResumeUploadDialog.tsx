@@ -90,7 +90,8 @@ export const ResumeUploadDialog = () => {
           <div>
             <DialogTitle className="text-2xl">Upload Your Resume</DialogTitle>
             <DialogDescription className="text-base">
-              Add your resume here.
+              Add your resume here to get started with AI-powered interview
+              preparation
             </DialogDescription>
           </div>
         </DialogHeader>

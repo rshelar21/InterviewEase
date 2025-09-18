@@ -1,6 +1,6 @@
 import { getUser } from '@/api/user/getUser';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
+import { ChevronDown, LogOut, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { signOut } from '@/lib/auth';
+import Link from 'next/link';
+import { APP_ROUTES } from '@/constants';
 
 export const UserInfoCard = async () => {
   const session = await getUser();
@@ -51,13 +53,15 @@ export const UserInfoCard = async () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            Profile
+            <Link href={`${APP_ROUTES.PROFILE}`} className="flex w-full">
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
             Settings
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-red-600">
             <div className="w-full">

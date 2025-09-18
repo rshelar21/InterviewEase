@@ -1,27 +1,22 @@
-'use client';
-import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff } from 'lucide-react';
-
-enum CallStatus {
-  INACTIVE = 'INACTIVE',
-  CONNECTING = 'CONNECTING',
-  ACTIVE = 'ACTIVE',
-  FINISHED = 'FINISHED',
-}
+import { CallStatus } from '@/types';
 
 interface InterviewSessionActionsProps {
   onDisconnectCall: () => void;
   callStatus: CallStatus;
   onCallStart: () => void;
+  handleToggleMute: () => void;
+  isMuted: boolean;
 }
 
 export const InterviewSessionActions = ({
   onDisconnectCall,
   callStatus,
   onCallStart,
+  handleToggleMute,
+  isMuted,
 }: InterviewSessionActionsProps) => {
-  const [isMuted, setIsMuted] = useState(false);
   return (
     <div className="flex items-center justify-center gap-3">
       {(callStatus === CallStatus.ACTIVE ||
@@ -29,7 +24,7 @@ export const InterviewSessionActions = ({
         <Button
           variant={isMuted ? 'destructive' : 'outline'}
           size="lg"
-          onClick={() => setIsMuted(!isMuted)}
+          onClick={handleToggleMute}
           className="h-14 w-14 rounded-full"
         >
           {isMuted ? (

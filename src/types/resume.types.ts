@@ -4,4 +4,6 @@ export interface Resume {
   resumeUrl: string;
   userId: string;
   content: JSON;
+  createdAt: Date;
+  updatedAt: Date;
 }
