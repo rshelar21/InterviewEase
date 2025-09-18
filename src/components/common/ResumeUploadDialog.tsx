@@ -69,6 +69,7 @@ export const ResumeUploadDialog = () => {
       queryClient.invalidateQueries({
         queryKey: ['resume'],
       });
+      // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     } catch (err) {
       toast.error('Failed to Upload!');
     } finally {

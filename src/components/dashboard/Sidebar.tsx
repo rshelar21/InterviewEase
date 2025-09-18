@@ -1,5 +1,5 @@
 'use client';
-import { menuItems } from '@/constants';
+import { APP_ROUTES, menuItems } from '@/constants';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { MenuItem } from '@/types';
@@ -7,7 +7,7 @@ import { HelpCircle, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-const NavItem = ({ item }: { item: MenuItem }) => {
+export const NavItem = ({ item }: { item: MenuItem }) => {
   const pathname = usePathname();
 
   return (
@@ -29,11 +29,14 @@ const NavItem = ({ item }: { item: MenuItem }) => {
 
 export const Sidebar = () => {
   return (
-    <div className="border-border relative h-screen w-[230px] border-r transition-all duration-300 ease-in-out">
+    <div className="border-border relative hidden h-screen w-[230px] border-r transition-all duration-300 ease-in-out lg:inline-block">
       <div className="flex h-full flex-col">
         {/* App-Logo */}
         <div className="border-border flex h-16 items-center border-b px-5">
-          <Link href="/dashbord" className="flex w-full items-center gap-3">
+          <Link
+            href={APP_ROUTES.DASHBOARD}
+            className="flex w-full items-center gap-3"
+          >
             <Image
               src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
               alt="CMSFullForm"

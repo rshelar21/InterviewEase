@@ -55,11 +55,14 @@ import {
   FORM_THIRD_FORM_SCHEMA,
   FORM_STEPS,
 } from './createInterviewForm.utils';
-import { createInterview, updateInterview } from '@/actions';
+// import { createInterview, updateInterview } from '@/actions';
 import { useFormStatus } from 'react-dom';
 import { Interview } from '@/types';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
+import { postInterview, updateInterview } from '@/api/interview';
+import { useRouter } from 'next/navigation';
+import { APP_ROUTES } from '@/constants';
 
 interface CreateInterviewDialogProps {
   isOpen: boolean;
@@ -67,11 +70,17 @@ interface CreateInterviewDialogProps {
   data: Interview | null;
 }
 
+const today = new Date();
+
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+
 export function CreateInterviewDialog({
   isOpen,
   onClose,
   data,
 }: CreateInterviewDialogProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [currentStep, setCurrentStep] = useState(1);
   // const [state, formAction, isPending] = useActionState(createInterview, undefined)
@@ -92,7 +101,7 @@ export function CreateInterviewDialog({
       description: '',
       difficulty: 'ENTRY_LEVEL',
       interviewType: 'TECHNICAL',
-      scheduledDate: new Date(),
+      scheduledDate: tomorrow,
       scheduleLater: false,
       status: 'DRAFT',
     },
@@ -107,12 +116,12 @@ export function CreateInterviewDialog({
         description: data?.description,
         difficulty: data?.difficulty,
         interviewType: data?.interviewType,
-        scheduledDate: data?.scheduledDate || new Date(),
+        scheduledDate: data?.scheduledDate || tomorrow,
         scheduleLater: data?.scheduleLater,
         status: data?.status,
       });
     }
-  }, [data]);
+  }, [data, form]);
 
   const watchScheduleLater = form.watch('scheduleLater');
 
@@ -131,15 +140,39 @@ export function CreateInterviewDialog({
 
     try {
       if (data?.id) {
-        await updateInterview(data?.id, form.getValues() as Interview);
+        const res = updateInterview('/interview', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            ...(form.getValues() as Interview),
+            ...(form.getValues('scheduleLater') && {
+              status: 'SCHEDULED',
+            }),
+            id: data?.id,
+          }),
+        });
+        console.log(res);
+        // await updateInterview(data?.id, form.getValues() as Interview);
         toast.success('Interview Details Updated!');
       } else {
-        await createInterview(form.getValues() as Interview);
+        const res = await postInterview('/interview', {
+          method: 'POST',
+          body: JSON.stringify({
+            ...(form.getValues() as Interview),
+            ...(form.getValues('scheduleLater') && {
+              status: 'SCHEDULED',
+            }),
+          }),
+        });
+        console.log(res);
         toast.success('Interview Created Successfuly!');
+        if (!form.getValues('scheduleLater')) {
+          router.push(`${APP_ROUTES.INTERVIEW_SESSION}/${res?.data?.id}`);
+        }
       }
       queryClient.invalidateQueries({
         queryKey: ['interview'],
       });
+
       handleClose();
       // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     } catch (err) {
@@ -245,10 +278,7 @@ export function CreateInterviewDialog({
                             Company Name
                           </FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="e.g. TechCorp Inc."
-                              {...field}
-                            />
+                            <Input placeholder="e.g. Google" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -268,7 +298,7 @@ export function CreateInterviewDialog({
                         <FormControl>
                           <Textarea
                             placeholder="Paste the full job description here. This helps our AI generate relevant interview questions and preparation materials..."
-                            className="min-h-[120px] resize-none"
+                            className="h-full max-h-[120px] min-h-[120px] resize-none"
                             {...field}
                           />
                         </FormControl>
@@ -339,7 +369,7 @@ export function CreateInterviewDialog({
                                 {/* <SelectItem value="case-study">
                               Case Study
                               </SelectItem> */}
-                                <SelectItem value="cultural-fit">
+                                <SelectItem value="CULTURAL_FIT">
                                   Cultural Fit
                                 </SelectItem>
                               </SelectContent>
@@ -459,7 +489,7 @@ export function CreateInterviewDialog({
                                 selected={field.value}
                                 onSelect={field.onChange}
                                 disabled={(date) =>
-                                  date < new Date() ||
+                                  date <= new Date() ||
                                   date < new Date('1900-01-01')
                                 }
                                 initialFocus

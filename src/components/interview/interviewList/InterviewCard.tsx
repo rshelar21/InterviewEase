@@ -97,8 +97,15 @@ export const InterviewCard = ({
       queryKey: ['interview'],
     });
   };
+
   return (
-    <Link href={`${APP_ROUTES.INTERVIEW_SESSION}/1233`}>
+    <Link
+      href={
+        interview?.status === 'DRAFT' || interview?.status === 'SCHEDULED'
+          ? `${APP_ROUTES.INTERVIEW_SESSION}/${interview?.id}`
+          : `${APP_ROUTES.INTERVIEWS}/${interview?.id}/${APP_ROUTES.FEEDBACK}`
+      }
+    >
       <Card className="group hover:border-primary/20 border-border border-2 transition-all duration-200 hover:shadow-lg">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
@@ -154,10 +161,6 @@ export const InterviewCard = ({
                   <Trash2 className="h-4 w-4" />
                   Delete
                 </DropdownMenuItem>
-                {/* <DropdownMenuItem className="gap-2">
-                  <Play className="h-4 w-4" />
-                  Start Practice
-                </DropdownMenuItem> */}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -225,9 +228,6 @@ export const InterviewCard = ({
           <div className="flex items-center gap-1">
             <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
             <span className="text-sm font-medium">{interview?.rating}</span>
-            {/* <span className="text-muted-foreground ml-1 text-xs">
-              difficulty rating
-            </span> */}
           </div>
         </CardContent>
 
@@ -237,12 +237,7 @@ export const InterviewCard = ({
             size="lg"
             variant="outline"
           >
-            {/* {interview.status === 'completed'
-            ? 'Review'
-            : interview.status === 'draft'
-              ? 'Continue Setup'
-              : 'Start Preparation'} */}
-            Start Preparation
+            {interview.status === 'COMPLETED' ? 'Review' : 'Start Preparation'}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </CardFooter>

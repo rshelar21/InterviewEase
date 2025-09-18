@@ -24,6 +24,7 @@ export async function GET() {
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_CLOUD_API_KEY,
     });
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: 'Failed to generate signature' },

@@ -47,13 +47,20 @@ export interface Interview {
   createdAt: Date;
   updatedAt: Date;
   feedback?: Feedback[]; // You'll need to define Feedback interface too
+  questions?: string[];
 }
 
 export interface Feedback {
   id: string;
   interviewId: string;
-  comment: string;
-  rating: number;
+  improvements: string[];
+  strengths: number[];
+  categoryScores: {
+    comment: string;
+    score: number;
+    name: string;
+    id: string;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }

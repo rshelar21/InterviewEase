@@ -1,4 +1,4 @@
-import { Home, MessageSquareHeart, MonitorDot } from 'lucide-react';
+import { Home, MonitorDot } from 'lucide-react';
 import { MenuItem } from '@/types';
 import { APP_ROUTES } from './app-routes';
 
@@ -17,11 +17,11 @@ export const menuItems: MenuItem[] = [
     href: APP_ROUTES.INTERVIEWS,
     children: [],
   },
-  {
-    icon: MessageSquareHeart,
-    id: 'feedback',
-    label: 'Feedback',
-    href: APP_ROUTES.FEEDBACK,
-    children: [],
-  },
+  // {
+  //   icon: MessageSquareHeart,
+  //   id: 'feedback',
+  //   label: 'Feedback',
+  //   href: APP_ROUTES.FEEDBACK,
+  //   children: [],
+  // },
 ];

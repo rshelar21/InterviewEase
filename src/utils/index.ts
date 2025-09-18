@@ -1,1 +1,1 @@
-export { formatDateOnly, formatTimeOnly } from './formatDateTime';
+export { formatDateOnly, formatTimeOnly, formatTimer } from './formatDateTime';

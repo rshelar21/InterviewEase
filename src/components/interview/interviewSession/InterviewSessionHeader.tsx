@@ -1,28 +1,14 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Progress } from '@/components/ui/progress';
 import { Clock } from 'lucide-react';
+import { formatTimer } from '@/utils';
 
-const currentQuestion = 4;
-const totalQuestions = 20;
+interface InterviewSessionHeaderProps {
+  sessionTime: number;
+}
 
-export const InterviewSessionHeader = () => {
-  const [sessionTime, setSessionTime] = useState(0);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setSessionTime((prev) => prev + 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const progress = (currentQuestion / totalQuestions) * 100;
-
+export const InterviewSessionHeader = ({
+  sessionTime,
+}: InterviewSessionHeaderProps) => {
   return (
     <div>
       <div className="border-border bg-card/50 border-b backdrop-blur-sm">
@@ -37,19 +23,7 @@ export const InterviewSessionHeader = () => {
               </div>
               <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4" />
-                {formatTime(sessionTime)}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <div className="text-center">
-                <div className="text-muted-foreground text-sm">Question</div>
-                <div className="text-primary text-lg font-semibold">
-                  {currentQuestion} of {totalQuestions}
-                </div>
-              </div>
-              <div className="w-48">
-                <Progress value={progress} className="h-2" />
+                {formatTimer(sessionTime)}
               </div>
             </div>
           </div>

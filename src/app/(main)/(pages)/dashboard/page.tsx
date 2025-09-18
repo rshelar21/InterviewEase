@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/common';
-import { Calendar, Clock, Goal } from 'lucide-react';
+import { Calendar, Goal } from 'lucide-react';
 import {
   RecentInterviews,
   UserPerformanceCard,
@@ -7,7 +7,13 @@ import {
   MotivationalQuote,
 } from '@/components/dashboard';
 
+import { getAnalyticsDetails } from '@/api/analytics/db/analytics';
+
 const DashboardPage = async () => {
+  const { totalInterviews, upcomingThisWeek, lastSixMonths } =
+    await getAnalyticsDetails();
+
+  // console.log(totalInterviews, upcomingThisWeek, lastSixMonths);
   return (
     <div className="">
       <PageHeading
@@ -21,13 +27,13 @@ const DashboardPage = async () => {
             <StatsCard
               title="Total Interviews"
               description="This month"
-              value={'127'}
+              value={Number(totalInterviews || 0)}
               Icon={Goal}
               trend="up"
             />
           </div>
 
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <StatsCard
               title="Avg. Duration"
               description="Per session"
@@ -35,13 +41,13 @@ const DashboardPage = async () => {
               Icon={Clock}
               trend="down"
             />
-          </div>
+          </div> */}
 
           <div className="col-span-1">
             <StatsCard
               title="Upcoming"
               description="Scheduled"
-              value={'5'}
+              value={Number(upcomingThisWeek || 0)}
               Icon={Calendar}
               trend="neutral"
             />
@@ -50,12 +56,12 @@ const DashboardPage = async () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-7">
           <div className="col-span-1 lg:col-span-4">
-            <UserPerformanceCard />
+            <UserPerformanceCard interviews={lastSixMonths} />
           </div>
           <div className="col-span-1 lg:col-span-3">
             <div className="space-y-6">
               <MotivationalQuote />
-              <RecentInterviews />
+              <RecentInterviews interviews={lastSixMonths} />
             </div>
           </div>
         </div>

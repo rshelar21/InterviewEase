@@ -19,8 +19,8 @@ model User {
   accounts      Account[]
   Authenticator Authenticator[]
   Interview     Interview[]
-  sessions      Session[]
   Reusme        Reusme?
+  sessions      Session[]
 }
 
 model Account {
@@ -73,12 +73,24 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+model CategoryScore {
+  id         String   @id @default(uuid())
+  comment    String
+  score      Int
+  name       String
+  feedbackId String
+  Feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+}
+
 model Feedback {
-  id          String     @id @default(uuid())
-  title       String
-  description String
-  interviewId String?
-  Interview   Interview? @relation(fields: [interviewId], references: [id])
+  id             String          @id @default(uuid())
+  interviewId    String          @unique
+  improvements   String[]
+  strengths      String[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  categoryScores CategoryScore[]
+  Interview      Interview       @relation(fields: [interviewId], references: [id])
 }
 
 model Interview {
@@ -98,8 +110,21 @@ model Interview {
   score          Int            @default(0)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
-  feedback       Feedback[]
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedback       Feedback?
+  questions      String[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Reusme {
+  id        String   @id @default(uuid())
+  name      String
+  resumeUrl String
+  userId    String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum DifficultyEnum {
@@ -121,13 +146,4 @@ enum InterviewStaus {
   IN_PROGRESS
   COMPLETED
   SCHEDULED
-}
-
-model Reusme {
-  id        String  @id @default(uuid())
-  name      String
-  resumeUrl String
-  userId    String  @unique
-  content   Json
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

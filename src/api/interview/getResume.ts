@@ -1,5 +1,4 @@
 import { fetchRequest } from '@/lib/fetchRequest';
-
 import { Resume } from '@/types';
 interface ServerResponse {
   data: Resume;

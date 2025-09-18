@@ -5,7 +5,11 @@ import {
   HydrationBoundary,
 } from '@tanstack/react-query';
 import { PageHeading } from '@/components/common';
-import { InterviewsList, CreateInterviewButton } from '@/components/interview';
+import {
+  InterviewsList,
+  CreateInterviewButton,
+  InterviewCardSkeleton,
+} from '@/components/interview';
 import { getInterviews } from '@/api/interview';
 
 const InterviewsPage = async () => {
@@ -25,7 +29,7 @@ const InterviewsPage = async () => {
         actions={<CreateInterviewButton />}
       />
       <HydrationBoundary state={dehydratedState}>
-        <Suspense fallback={<p>loading</p>}>
+        <Suspense fallback={<InterviewCardSkeleton />}>
           <InterviewsList />
         </Suspense>
       </HydrationBoundary>

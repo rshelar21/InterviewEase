@@ -12,116 +12,74 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-
-interface Interview {
-  id: number;
-  company: string;
-  position: string;
-  date: string;
-  duration: string;
-  status: string;
-  score: number;
-  interviewer: string;
-  type: string;
-}
+import { Interview } from '@/types';
+import { formatDateOnly, formatTimeOnly } from '@/utils';
+import { APP_ROUTES } from '@/constants';
 
 interface RecentInterviewCardProps {
   interview: Interview;
 }
 
-const interviews = [
-  {
-    id: 1,
-    company: 'Google',
-    position: 'Senior Frontend Developer',
-    date: '2024-01-15',
-    duration: '45m',
-    status: 'completed',
-    score: 92,
-    interviewer: 'Sarah Chen',
-    type: 'Technical',
-  },
-  {
-    id: 2,
-    company: 'Microsoft',
-    position: 'React Developer',
-    date: '2024-01-12',
-    duration: '38m',
-    status: 'completed',
-    score: 88,
-    interviewer: 'John Smith',
-    type: 'Behavioral',
-  },
-  {
-    id: 3,
-    company: 'Meta',
-    position: 'Full Stack Engineer',
-    date: '2024-01-10',
-    duration: '52m',
-    status: 'completed',
-    score: 85,
-    interviewer: 'Lisa Wang',
-    type: 'System Design',
-  },
-  {
-    id: 4,
-    company: 'Amazon',
-    position: 'Software Engineer',
-    date: '2024-01-08',
-    duration: '41m',
-    status: 'completed',
-    score: 79,
-    interviewer: 'Mike Johnson',
-    type: 'Technical',
-  },
-];
-
 const RecentInterviewCard = ({ interview }: RecentInterviewCardProps) => {
   return (
-    <div
-      key={interview.id}
-      className="border-border hover:bg-muted/50 flex items-center justify-between rounded-lg border p-4 transition-colors"
-    >
-      <div className="flex items-center gap-4">
-        <Avatar className="h-10 w-10">
-          <AvatarImage
-            src={`/abstract-geometric-shapes.png?height=40&width=40&query=${interview.company} logo`}
-          />
-          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-            {interview.company.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <h4 className="font-semibold">{interview.company}</h4>
-            <Badge variant="outline" className="text-xs">
-              {interview.type}
-            </Badge>
+    <div>
+      <Link
+        href={
+          interview?.status === 'DRAFT' || interview?.status === 'SCHEDULED'
+            ? `${APP_ROUTES.INTERVIEW_SESSION}/${interview?.id}`
+            : `${APP_ROUTES.INTERVIEWS}/${interview?.id}/${APP_ROUTES.FEEDBACK}`
+        }
+      >
+        <div className="border-border hover:bg-muted/50 flex items-center justify-between rounded-lg border p-4 transition-colors">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-10 w-10">
+              <AvatarImage
+                src={`/abstract-geometric-shapes.png?height=40&width=40&query=${interview?.companyName} logo`}
+              />
+              <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                {interview.companyName.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <h4 className="font-semibold">{interview.companyName}</h4>
+                <Badge variant="outline" className="text-xs">
+                  {interview?.interviewType}
+                </Badge>
+              </div>
+              <p className="text-muted-foreground text-sm">{interview.title}</p>
+              <div className="text-muted-foreground flex items-center gap-4 text-xs">
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+
+                  {formatDateOnly(interview?.createdAt)}
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock className="h-3 w-3" />
+                  {formatTimeOnly(interview?.createdAt)}
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-muted-foreground text-sm">{interview.position}</p>
-          <div className="text-muted-foreground flex items-center gap-4 text-xs">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              {new Date(interview.date).toLocaleDateString()}
+
+          <div className="text-right">
+            <div className="text-primary text-2xl font-bold">
+              {interview?.score}
+              <span className="text-muted-foreground text-xs">/100</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              {interview.duration}
-            </div>
+            <p className="text-muted-foreground text-xs">Score</p>
           </div>
         </div>
-      </div>
-      <div className="text-right">
-        <div className="text-primary text-2xl font-bold">
-          {interview.score}%
-        </div>
-        <p className="text-muted-foreground text-xs">Score</p>
-      </div>
+      </Link>
     </div>
   );
 };
 
-export const RecentInterviews = () => {
+export const RecentInterviews = ({
+  interviews,
+}: {
+  interviews: Partial<Interview>[];
+}) => {
   return (
     <Card className="relative overflow-hidden">
       <CardHeader className="">

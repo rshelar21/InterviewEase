@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -7,23 +9,44 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { CustomAreaChart } from '@/components/common';
+import { Interview } from '@/types';
+import { format } from 'date-fns';
 
-const data = [
-  { label: 'Jan', value: 65, interviews: 8 },
-  { label: 'Feb', value: 72, interviews: 12 },
-  { label: 'Mar', value: 78, interviews: 15 },
-  { label: 'Apr', value: 81, interviews: 18 },
-  { label: 'May', value: 84, interviews: 22 },
-  { label: 'Jun', value: 87, interviews: 25 },
-  { label: 'July', value: 87, interviews: 25 },
-  { label: 'Aug', value: 87, interviews: 25 },
-  { label: 'Sept', value: 87, interviews: 25 },
-  { label: 'Oct', value: 87, interviews: 25 },
-  { label: 'Nov', value: 87, interviews: 25 },
-  { label: 'Dec', value: 87, interviews: 25 },
-];
+export const UserPerformanceCard = ({
+  interviews,
+}: {
+  interviews: Partial<Interview>[];
+}) => {
+  const chartData = useMemo(() => {
+    const grouped: Record<string, { totalScore: number; interviews: number }> =
+      {};
 
-export const UserPerformanceCard = () => {
+    interviews.forEach((interview) => {
+      const effectiveDate =
+        interview.scheduleLater && interview.scheduledDate
+          ? new Date(interview?.scheduledDate)
+          : interview?.createdAt
+            ? new Date(interview?.createdAt)
+            : new Date();
+
+      const month = format(effectiveDate, 'MMM'); // e.g. "Sep"
+
+      if (!grouped[month]) {
+        grouped[month] = { totalScore: 0, interviews: 0 };
+      }
+
+      grouped[month].totalScore += interview.score ?? 0;
+      grouped[month].interviews += 1;
+    });
+
+    return Object.entries(grouped).map(([month, stats]) => ({
+      label: month,
+      value: stats.totalScore / stats.interviews, // avg score
+      interviews: stats.interviews,
+    }));
+  }, [interviews]); // recompute only when rawData changes
+
+  // console.log(chartData)
   return (
     <Card className="relative overflow-hidden">
       <CardHeader className="">
@@ -35,7 +58,7 @@ export const UserPerformanceCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CustomAreaChart data={data} />
+        <CustomAreaChart data={chartData} />
       </CardContent>
     </Card>
   );

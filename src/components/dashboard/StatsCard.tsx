@@ -13,7 +13,7 @@ export const StatsCard = ({
 }: {
   title: string;
   description: string | React.ReactNode;
-  value: string;
+  value: string | number;
   Icon: React.ForwardRefExoticComponent<
     Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >;
