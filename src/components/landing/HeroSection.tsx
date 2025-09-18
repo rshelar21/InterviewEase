@@ -43,7 +43,7 @@ export function HeroSection() {
                 size="lg"
                 className="border-0 bg-gradient-to-r from-[#7877c6] to-[#9b59b6] px-8 py-3 text-lg font-semibold text-white shadow-lg shadow-[#7877c6]/25 hover:from-[#6b6ab8] hover:to-[#8e4ec6]"
               >
-                Start Free Trial
+                Start Practicing Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -57,7 +57,7 @@ export function HeroSection() {
             </Button> */}
           </div>
 
-          <div className="mx-auto flex w-full max-w-lg flex-wrap items-center justify-between gap-4 md:gap-0">
+          <div className="mx-auto flex w-full max-w-md flex-wrap items-center justify-between gap-4 md:gap-0">
             <div className="text-center">
               <div className="mb-2 bg-gradient-to-r from-[#7877c6] to-[#9b59b6] bg-clip-text text-4xl font-bold text-transparent">
                 95%
@@ -66,9 +66,9 @@ export function HeroSection() {
             </div>
             <div className="text-center">
               <div className="mb-2 bg-gradient-to-r from-[#7877c6] to-[#9b59b6] bg-clip-text text-4xl font-bold text-transparent">
-                10K+
+                50K+
               </div>
-              <div className="text-sm text-[#64748b]">Users Hired</div>
+              <div className="text-sm text-[#64748b]">Interviews</div>
             </div>
             <div className="text-center">
               <div className="mb-2 bg-gradient-to-r from-[#7877c6] to-[#9b59b6] bg-clip-text text-4xl font-bold text-transparent">

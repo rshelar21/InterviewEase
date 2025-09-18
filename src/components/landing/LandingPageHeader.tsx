@@ -99,11 +99,12 @@ export function LandingPageHeader() {
               >
                 Pricing
               </a>
-              <div className="flex flex-col space-y-2 px-3 pt-2">
-                <Button variant="outline" size="sm">
-                  Sign In
-                </Button>
-                <Button size="sm">Get Started</Button>
+              <div className="px-3 pt-2">
+                <Link href="/login">
+                  <Button variant="outline" size="sm" className="w-full">
+                    Sign In
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

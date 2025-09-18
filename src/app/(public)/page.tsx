@@ -5,7 +5,6 @@ import {
   LandingFooter,
   LandingPageHeader,
   PricingSection,
-  SocialProofSection,
   TestimonialsSection,
 } from '@/components/landing';
 
@@ -15,7 +14,7 @@ export default async function Home() {
       <LandingPageHeader />
       <main>
         <HeroSection />
-        <SocialProofSection />
+        {/* <SocialProofSection /> */}
         <FeaturesSection />
         <TestimonialsSection />
         <PricingSection />

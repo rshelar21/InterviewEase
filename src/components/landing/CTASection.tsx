@@ -21,7 +21,7 @@ export function CTASection() {
                 variant="secondary"
                 className="px-8 py-3 text-lg font-semibold"
               >
-                Start Free Trial
+                Start Practicing Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -34,7 +34,7 @@ export function CTASection() {
             </Button> */}
           </div>
           <p className="mt-6 text-sm text-white/70">
-            No credit card required • 14-day free trial • Cancel anytime
+            No credit card required • Free to Use
           </p>
         </div>
       </div>

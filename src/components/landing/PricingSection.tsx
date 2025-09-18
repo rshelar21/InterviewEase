@@ -1,123 +1,82 @@
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Check } from 'lucide-react';
+import { ArrowRight, Star, Users, Zap } from 'lucide-react';
+import Link from 'next/link';
 
 export function PricingSection() {
-  const plans = [
-    {
-      name: 'Free',
-      price: '$0',
-      period: 'forever',
-      description: 'Perfect for getting started',
-      features: [
-        '3 mock interviews per month',
-        'Basic AI feedback',
-        'General interview questions',
-        'Progress tracking',
-      ],
-      cta: 'Get Started',
-      popular: false,
-    },
-    {
-      name: 'Pro',
-      price: '$29',
-      period: 'per month',
-      description: 'Best for serious job seekers',
-      features: [
-        'Unlimited mock interviews',
-        'Advanced AI coaching',
-        'Industry-specific questions',
-        'Detailed analytics',
-        'Video practice sessions',
-        'Priority support',
-      ],
-      cta: 'Start Free Trial',
-      popular: true,
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      period: 'pricing',
-      description: 'For teams and organizations',
-      features: [
-        'Everything in Pro',
-        'Team management',
-        'Custom question banks',
-        'Advanced reporting',
-        'SSO integration',
-        'Dedicated support',
-      ],
-      cta: 'Contact Sales',
-      popular: false,
-    },
-  ];
-
   return (
-    <section id="pricing" className="bg-background py-24">
+    <section className="from-background to-muted/20 relative bg-gradient-to-b py-20 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold text-balance sm:text-5xl">
-            Simple,{' '}
-            <span className="from-primary to-accent bg-gradient-to-r bg-clip-text text-transparent">
-              transparent pricing
-            </span>
-          </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-balance">
-            Choose the plan that fits your needs. Upgrade or downgrade at any
-            time.
-          </p>
-        </div>
+        <div className="mx-auto max-w-4xl text-center">
+          {/* Badge */}
+          <Badge
+            variant="secondary"
+            className="mb-6 px-4 py-2 text-sm font-medium"
+          >
+            <Zap className="mr-2 h-4 w-4" />
+            100% Free Forever
+          </Badge>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-          {plans.map((plan, index) => (
-            <Card
-              key={index}
-              className={`border-border relative ${plan.popular ? 'ring-primary ring-2' : ''}`}
+          {/* Main Heading */}
+          <h1 className="mb-6 text-4xl font-bold text-balance sm:text-5xl lg:text-6xl">
+            Your Free AI{' '}
+            <span className="from-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">
+              Interview Coach
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-muted-foreground mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-balance sm:text-2xl">
+            Master your next interview with AI-powered mock interviews,
+            personalized feedback, and industry-specific questions. No hidden
+            fees, no subscriptions—just results.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            {/* <Button
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-3 text-lg"
             >
-              {plan.popular && (
-                <Badge className="bg-primary text-primary-foreground absolute -top-3 left-1/2 -translate-x-1/2 transform">
-                  Most Popular
-                </Badge>
-              )}
-              <CardHeader className="pb-8 text-center">
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.period !== 'pricing' && (
-                    <span className="text-muted-foreground ml-1">
-                      /{plan.period}
-                    </span>
-                  )}
-                </div>
-                <CardDescription className="mt-2">
-                  {plan.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="mb-8 space-y-3">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="text-primary mr-3 h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  className="w-full"
-                  variant={plan.popular ? 'default' : 'outline'}
-                >
-                  {plan.cta}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+              Start Practicing Now
+            </Button> */}
+            <Link href="/login">
+              <Button
+                size="lg"
+                className="border-0 bg-gradient-to-r from-[#7877c6] to-[#9b59b6] px-8 py-3 text-lg font-semibold text-white shadow-lg shadow-[#7877c6]/25 hover:from-[#6b6ab8] hover:to-[#8e4ec6]"
+              >
+                Start Practicing Now
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            {/* <Button
+              variant="outline"
+              size="lg"
+              className="bg-transparent px-8 py-3 text-lg"
+            >
+              <Play className="mr-2 h-5 w-5" />
+              Watch Demo
+            </Button> */}
+          </div>
+
+          {/* Social Proof */}
+          <div className="text-muted-foreground flex flex-col items-center justify-center gap-8 sm:flex-row">
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                  />
+                ))}
+              </div>
+              <span className="text-sm">4.9/5 from 10,000+ users</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              <span className="text-sm">50,000+ interviews completed</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
