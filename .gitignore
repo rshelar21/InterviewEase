@@ -42,4 +42,5 @@ next-env.d.ts
 
 /src/generated/prisma
 
-text.txt
+# Ignore text.txt in root
+/text.txt
