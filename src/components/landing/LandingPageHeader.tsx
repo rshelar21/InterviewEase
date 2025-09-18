@@ -17,28 +17,20 @@ export function LandingPageHeader() {
           <div className="flex items-center">
             <Link
               href={APP_ROUTES.HOME}
-              className="flex w-full items-center gap-3"
+              className="-ml-8 flex w-full items-center gap-2"
             >
               <Image
-                src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
-                alt="CMSFullForm"
-                width={32}
-                height={32}
-                className="hidden flex-shrink-0 dark:block"
+                src="/assets/icons/logo.png"
+                alt="InterviewEase"
+                width={100}
+                height={150}
+                className="block flex-shrink-0 object-cover"
               />
 
-              <Image
-                src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
-                alt="CMSFullForm"
-                width={32}
-                height={32}
-                className="block flex-shrink-0 dark:hidden"
-              />
-              <span className="text-lg font-semibold text-gray-900 transition-opacity duration-200 hover:cursor-pointer dark:text-white">
-                InterviewEase
+              <span className="-ml-6 text-xl font-semibold text-gray-900 transition-opacity duration-200 hover:opacity-80 dark:text-white">
+                Interview<span className="text-[#7877c6]">Ease</span>
               </span>
             </Link>
-            {/* <InterviewEaseLogo size="sm" theme="light" /> */}
           </div>
 
           {/* Desktop Navigation */}
