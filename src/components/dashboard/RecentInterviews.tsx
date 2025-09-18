@@ -17,7 +17,7 @@ import { formatDateOnly, formatTimeOnly } from '@/utils';
 import { APP_ROUTES } from '@/constants';
 
 interface RecentInterviewCardProps {
-  interview: Interview;
+  interview: Partial<Interview>;
 }
 
 const RecentInterviewCard = ({ interview }: RecentInterviewCardProps) => {
@@ -37,7 +37,7 @@ const RecentInterviewCard = ({ interview }: RecentInterviewCardProps) => {
                 src={`/abstract-geometric-shapes.png?height=40&width=40&query=${interview?.companyName} logo`}
               />
               <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                {interview.companyName.charAt(0)}
+                {interview?.companyName?.charAt(0)}
               </AvatarFallback>
             </Avatar>
             <div className="space-y-1">
@@ -52,11 +52,11 @@ const RecentInterviewCard = ({ interview }: RecentInterviewCardProps) => {
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
 
-                  {formatDateOnly(interview?.createdAt)}
+                  {interview?.createdAt && formatDateOnly(interview?.createdAt)}
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  {formatTimeOnly(interview?.createdAt)}
+                  {interview?.createdAt && formatTimeOnly(interview?.createdAt)}
                 </div>
               </div>
             </div>
