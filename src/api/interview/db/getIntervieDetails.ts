@@ -1,5 +1,6 @@
 'use server';
 import prisma from '@/lib/db';
+import { Feedback } from '@/types';
 
 export async function getIntervieDetails(id: string) {
   const interview = await prisma.interview.findUnique({
@@ -11,7 +12,9 @@ export async function getIntervieDetails(id: string) {
   return interview;
 }
 
-export async function getInterviewFeedback(id: string) {
+export async function getInterviewFeedback(
+  id: string
+): Promise<Feedback | null> {
   const feedback = await prisma.feedback.findUnique({
     where: {
       interviewId: id,
@@ -23,6 +26,8 @@ export async function getInterviewFeedback(id: string) {
       createdAt: true,
       strengths: true,
       Interview: true,
+      interviewId: true,
+      updatedAt: true,
     },
   });
   return feedback;

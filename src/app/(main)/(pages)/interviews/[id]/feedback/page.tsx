@@ -273,7 +273,7 @@ const FeedbackPage = async ({
                     </h4>
 
                     <div className="space-y-2 space-x-2">
-                      {feedback?.strengths?.map((item) => (
+                      {feedback?.strengths?.map((item: string) => (
                         <Badge
                           className="border-green-300 bg-green-100 text-xs"
                           key={item}
@@ -303,7 +303,7 @@ const FeedbackPage = async ({
                       </div>
                     )}
                     <div className="space-y-2 space-x-2">
-                      {feedback?.improvements?.map((item) => (
+                      {feedback?.improvements?.map((item: string) => (
                         <Badge
                           variant="destructive"
                           className="text-xs"

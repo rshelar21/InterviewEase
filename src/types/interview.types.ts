@@ -71,8 +71,9 @@ export interface Feedback {
   id: string;
   interviewId: string;
   improvements: string[];
-  strengths: number[];
+  strengths: string[];
   categoryScores: CategoryScore[];
   createdAt: Date;
   updatedAt: Date;
+  Interview?: Interview;
 }
