@@ -9,17 +9,17 @@ import {
 
 import { getAnalyticsDetails } from '@/api/analytics/db/analytics';
 import { avgDurationInSeconds } from '@/utils';
+import { getUser } from '@/api/user/getUser';
 
 const DashboardPage = async () => {
+  const session = await getUser();
   const { totalInterviews, upcomingThisWeek, lastSixMonths } =
     await getAnalyticsDetails();
-
-  console.log(lastSixMonths);
 
   return (
     <div className="">
       <PageHeading
-        title="Welcome back, admin"
+        title={`Welcome back, ${session?.user?.name}`}
         subTitle="Ready to ace your next interview? Let's see your progress."
       />
 
