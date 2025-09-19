@@ -186,9 +186,10 @@ export function CreateInterviewDialog({
           router.push(`${APP_ROUTES.INTERVIEW_SESSION}/${res?.data?.id}`);
         }
       }
-      queryClient.invalidateQueries({
-        queryKey: ['interview'],
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['interview'] }),
+        queryClient.invalidateQueries({ queryKey: ['notifcations'] }),
+      ]);
 
       handleClose();
       // eslint-disable-next-line  @typescript-eslint/no-unused-vars

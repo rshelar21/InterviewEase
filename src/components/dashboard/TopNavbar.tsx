@@ -4,6 +4,7 @@ import { SidebarSheetButton } from './SidebarSheet';
 import Image from 'next/image';
 import Link from 'next/link';
 import { APP_ROUTES } from '@/constants';
+import { NotificationMenu } from './NotificationMenu';
 
 export const TopNavbar = async () => {
   return (
@@ -30,6 +31,7 @@ export const TopNavbar = async () => {
         </div>
         <div className="flex items-center">
           <SidebarSheetButton />
+          <NotificationMenu />
           <ThemeToogle />
 
           <UserInfoCard />

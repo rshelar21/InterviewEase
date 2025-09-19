@@ -161,7 +161,6 @@ export async function POST(request: NextRequest) {
     });
 
     const questionsArray = result?.object?.questions;
-    console.log(questionsArray);
 
     const newInterview = await prisma.interview.create({
       data: {
@@ -318,7 +317,6 @@ export async function PATCH(request: NextRequest) {
     });
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.log(error);
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

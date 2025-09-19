@@ -1,6 +1,12 @@
 import { getUser } from '@/api/user/getUser';
 import prisma from '@/lib/db';
-import { startOfWeek, endOfWeek, subMonths } from 'date-fns';
+import {
+  startOfWeek,
+  endOfWeek,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+} from 'date-fns';
 
 export async function getAnalyticsDetails() {
   const session = await getUser();
@@ -11,10 +17,25 @@ export async function getAnalyticsDetails() {
   // Tomorrow start (midnight)
   const weekStart = startOfWeek(today, { weekStartsOn: 1 }); // 0 = Sunday, 1 = Monday
   const weekEnd = endOfWeek(today, { weekStartsOn: 1 });
+  const monthStart = startOfMonth(today); // e.g. 2025-09-01T00:00:00
+  const monthEnd = endOfMonth(today);
 
   const [totalInterviews, upcomingThisWeek, lastSixMonths] = await Promise.all([
     prisma.interview.count({
-      where: { userId: session?.user?.id },
+      where: {
+        userId: session?.user?.id,
+        createdAt: {
+          gte: monthStart,
+          lte: monthEnd,
+        },
+        scheduledDate: {
+          gte: monthStart,
+          lte: monthEnd,
+        },
+        status: {
+          equals: 'COMPLETED',
+        },
+      },
     }),
 
     prisma.interview.count({
