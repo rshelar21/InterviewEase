@@ -5,7 +5,10 @@ import Link from 'next/link';
 
 export function PricingSection() {
   return (
-    <section className="from-background to-muted/20 relative bg-gradient-to-b py-20 lg:py-32">
+    <section
+      id="pricing"
+      className="from-background to-muted/20 relative bg-gradient-to-b py-20 lg:py-32"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
