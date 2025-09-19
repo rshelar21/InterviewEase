@@ -107,7 +107,7 @@ export const ResumeUploadDialog = ({
       return;
     }
     setIsLoading(true);
-    toast.loading('Updating Preference');
+    const t1 = toast.loading('Updating Preference');
     try {
       await updateUserPreference({
         resumeSkipped: true,
@@ -118,6 +118,7 @@ export const ResumeUploadDialog = ({
     } catch (err) {
       toast.error('Something went wrong!');
     } finally {
+      toast.dismiss(t1);
       setIsLoading(false);
     }
   };
