@@ -37,5 +37,5 @@ export const avgDurationInSeconds = (data: Partial<Interview>[]) => {
 
   const avgDurationInMinutes = Math.round(totalTime / 60);
 
-  return avgDurationInMinutes;
+  return avgDurationInMinutes || 0;
 };
