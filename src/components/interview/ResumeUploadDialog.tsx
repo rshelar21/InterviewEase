@@ -106,6 +106,8 @@ export const ResumeUploadDialog = ({
       onForcedClose?.();
       return;
     }
+    setIsLoading(true);
+    toast.loading('Updating Preference');
     try {
       await updateUserPreference({
         resumeSkipped: true,
@@ -115,6 +117,8 @@ export const ResumeUploadDialog = ({
       });
     } catch (err) {
       toast.error('Something went wrong!');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,7 +159,11 @@ export const ResumeUploadDialog = ({
               disabled={isLoading}
               size="lg"
             >
-              <SkipForward />
+              {isLoading ? (
+                <LoaderCircle className="size-4 animate-spin" />
+              ) : (
+                <SkipForward className="size-4" />
+              )}
               Skip for now
             </Button>
             <Button
