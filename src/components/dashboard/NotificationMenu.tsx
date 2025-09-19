@@ -34,7 +34,7 @@ export const NotificationMenu = () => {
         <Button variant="ghost" size="icon" asChild>
           <div className="relative">
             <Bell />
-            {data?.data?.length && (
+            {!!data?.data?.length && (
               <Badge className="absolute top-0 right-0.5 h-4 min-w-4 rounded-full bg-red-500 px-1 font-mono text-white tabular-nums">
                 {data?.data?.length}
               </Badge>

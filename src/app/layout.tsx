@@ -18,6 +18,9 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: 'InterviewEase',
   description: 'Manage your interviews effectively',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

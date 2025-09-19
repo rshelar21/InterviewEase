@@ -13,8 +13,8 @@ export const NavItem = ({ item }: { item: MenuItem }) => {
   return (
     <div
       className={cn(
-        'hover:bg-surface rounded-md text-base text-white transition-colors',
-        pathname === item?.href && 'bg-surface'
+        'hover:dark:bg-surface rounded-md text-base transition-colors dark:text-white',
+        pathname === item?.href && 'dark:bg-surface bg-black text-white'
       )}
     >
       <Link href={item?.href} prefetch>

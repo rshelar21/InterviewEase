@@ -23,7 +23,7 @@ export const UserResumeSection = () => {
       ) : (
         <div className="flex items-start gap-2">
           <div className="bg-background h-fit w-fit rounded-full p-3">
-            <FileText className="size-4 text-green-200" />
+            <FileText className="size-4 text-black dark:text-green-200" />
           </div>
 
           <div className="space-y-3">

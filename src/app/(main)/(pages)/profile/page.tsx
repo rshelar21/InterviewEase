@@ -44,7 +44,9 @@ const ProfilePage = async () => {
             </div>
 
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-300">{user?.name}</h1>
+              <h1 className="text-3xl font-bold dark:text-gray-300">
+                {user?.name}
+              </h1>
 
               <div className="flex flex-wrap items-start gap-2 md:gap-4">
                 <div className="flex items-center gap-2 py-1 text-gray-400">
