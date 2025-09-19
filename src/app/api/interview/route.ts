@@ -79,6 +79,8 @@ export async function POST(request: NextRequest) {
       scheduleLater,
     } = body;
 
+    const maxQuestionsLimit = process.env.NEXT_PUBLIC_MAX_QUESTIONS;
+
     const session = await getUser();
 
     const resumeData = await prisma.reusme.findUnique({
@@ -144,7 +146,7 @@ export async function POST(request: NextRequest) {
 
       ${promptInstructions}
       
-      Your task is to generate a list of 3 or fewer interview questions tailored to the candidate's profile and the job context.
+      Your task is to generate a list of ${maxQuestionsLimit} or fewer interview questions tailored to the candidate's profile and the job context.
       
       The questions should be a mix of the specified type (${interviewType}) and difficulty (${difficulty}).
       
@@ -211,6 +213,8 @@ export async function PATCH(request: NextRequest) {
       id,
     } = body;
 
+    const maxQuestionsLimit = process.env.NEXT_PUBLIC_MAX_QUESTIONS;
+
     const session = await getUser();
 
     const resumeData = await prisma.reusme.findUnique({
@@ -273,7 +277,7 @@ export async function PATCH(request: NextRequest) {
 
       ${promptInstructions}
       
-      Your task is to generate a list of 10 or fewer interview questions tailored to the candidate's profile and the job context.
+      Your task is to generate a list of ${maxQuestionsLimit} or fewer interview questions tailored to the candidate's profile and the job context.
       
       The questions should be a mix of the specified type (${interviewType}) and difficulty (${difficulty}).
       
