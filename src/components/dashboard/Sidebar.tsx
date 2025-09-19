@@ -29,7 +29,7 @@ export const NavItem = ({ item }: { item: MenuItem }) => {
 
 export const Sidebar = () => {
   return (
-    <div className="border-border relative hidden h-screen w-[230px] border-r transition-all duration-300 ease-in-out lg:inline-block">
+    <div className="border-border relative hidden h-screen w-[250px] border-r transition-all duration-300 ease-in-out lg:inline-block">
       <div className="flex h-full flex-col">
         {/* App-Logo */}
         <div className="border-border flex h-16 items-center border-b px-5">

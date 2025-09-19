@@ -34,7 +34,8 @@ export const InterviewSessionActions = ({
           )}
         </Button>
       )}
-      {callStatus === CallStatus.INACTIVE ? (
+      {callStatus === CallStatus.INACTIVE ||
+      callStatus === CallStatus.FINISHED ? (
         <Button
           onClick={onCallStart}
           size="lg"

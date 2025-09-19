@@ -16,6 +16,7 @@ import { createFeedback } from '@/actions';
 import { toast } from 'sonner';
 import { formatTimer } from '@/utils';
 import { CallStatus } from '@/types';
+import { InterviewEndedDialog } from './InterviewEndedDialog';
 
 interface InterviewSectionProps {
   interviewData: Interview | null;
@@ -41,6 +42,7 @@ export const InterviewSection = ({
   const [messages, setMessages] = useState<SendMessage[]>([]);
   const [sessionTime, setSessionTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [isInterviewEnded, setIsInterviewEnded] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -91,11 +93,14 @@ export const InterviewSection = ({
 
   const handleGenerateFeedback = async (messages: SendMessage[]) => {
     const t1 = toast.loading('Generating feedback');
+
     const data = await createFeedback({
       interviewId: interviewData?.id || '',
       transcript: messages,
       duration: formatTimer(sessionTime),
     });
+
+    setIsInterviewEnded(false);
 
     if (data?.id) {
       toast.dismiss(t1);
@@ -105,11 +110,14 @@ export const InterviewSection = ({
 
   useEffect(() => {
     if (callStatus === CallStatus.FINISHED) {
+      setIsInterviewEnded(true);
       handleGenerateFeedback(messages);
     }
   }, [messages, callStatus, userId]);
 
-  const handleCallStart = () => {
+  const handleCallStart = async () => {
+    const t1 = toast.loading('Starting your interview');
+
     setCallStatus(CallStatus.CONNECTING);
 
     let formattedQuestions = '';
@@ -125,6 +133,7 @@ export const InterviewSection = ({
         questions: formattedQuestions,
       },
     });
+    toast.dismiss(t1);
   };
 
   const handleDisconnectCall = () => {
@@ -154,70 +163,75 @@ export const InterviewSection = ({
   // };
 
   return (
-    <div className="flex h-full flex-col gap-10 pb-4 md:pb-10">
-      {/* header */}
+    <>
+      <div className="flex h-full flex-col gap-10 pb-4 md:pb-10">
+        {/* header */}
 
-      <div className="">
-        <InterviewSessionHeader
-          sessionTime={sessionTime}
-          interview={interviewData}
-        />
-      </div>
-      {/* users cards */}
-      <div className="flex-1 px-6 lg:px-0">
-        <div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-between">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="col-span-1">
-              <Card
-                className={cn(
-                  'cursor-pointer gap-4 py-6 md:py-12',
-                  isSpeaking && 'shadow-border border-gray-600 shadow-md'
-                )}
-              >
-                <div className="bg-background mx-auto h-fit w-fit rounded-full p-4 md:p-6">
-                  <Bot className="size-12 md:size-16" />
-                </div>
-                <p className="text-center text-lg font-semibold">
-                  AI Interviewer
-                </p>
-              </Card>
+        <div className="">
+          <InterviewSessionHeader
+            sessionTime={sessionTime}
+            interview={interviewData}
+          />
+        </div>
+        {/* users cards */}
+        <div className="flex-1 px-6 lg:px-0">
+          <div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-between">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="col-span-1">
+                <Card
+                  className={cn(
+                    'cursor-pointer gap-4 py-6 md:py-12',
+                    isSpeaking && 'shadow-border border-gray-600 shadow-md'
+                  )}
+                >
+                  <div className="bg-background mx-auto h-fit w-fit rounded-full p-4 md:p-6">
+                    <Bot className="size-12 md:size-16" />
+                  </div>
+                  <p className="text-center text-lg font-semibold">
+                    AI Interviewer
+                  </p>
+                </Card>
+              </div>
+
+              <div className="col-span-1">
+                <Card className={cn('cursor-pointer gap-4 py-6 md:py-12')}>
+                  <div className="bg-background mx-auto h-fit w-fit rounded-full p-4 md:p-6">
+                    <Avatar className="size-12 md:size-16">
+                      <AvatarImage
+                        src={`${userImg}`}
+                        alt={userName || 'user-image'}
+                      />
+                      <AvatarFallback>
+                        <User className="h-4 w-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <p className="text-center text-lg font-semibold">
+                    {userName}
+                  </p>
+                </Card>
+              </div>
             </div>
 
-            <div className="col-span-1">
-              <Card className={cn('cursor-pointer gap-4 py-6 md:py-12')}>
-                <div className="bg-background mx-auto h-fit w-fit rounded-full p-4 md:p-6">
-                  <Avatar className="size-12 md:size-16">
-                    <AvatarImage
-                      src={`${userImg}`}
-                      alt={userName || 'user-image'}
-                    />
-                    <AvatarFallback>
-                      <User className="h-4 w-4" />
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-                <p className="text-center text-lg font-semibold">{userName}</p>
-              </Card>
+            <div className="h-[30px] overflow-y-auto pt-1 md:h-auto">
+              <p className="text-center opacity-100 transition-opacity duration-300">
+                {latestMessage}
+              </p>
             </div>
-          </div>
-
-          <div className="h-[30px] overflow-y-auto pt-1 md:h-auto">
-            <p className="text-left opacity-100 transition-opacity duration-300">
-              {latestMessage}
-            </p>
           </div>
         </div>
+        {/* actions */}
+        <div className="">
+          <InterviewSessionActions
+            onDisconnectCall={handleDisconnectCall}
+            callStatus={callStatus}
+            onCallStart={handleCallStart}
+            handleToggleMute={handleToggleMute}
+            isMuted={isMuted}
+          />
+        </div>
       </div>
-      {/* actions */}
-      <div className="">
-        <InterviewSessionActions
-          onDisconnectCall={handleDisconnectCall}
-          callStatus={callStatus}
-          onCallStart={handleCallStart}
-          handleToggleMute={handleToggleMute}
-          isMuted={isMuted}
-        />
-      </div>
-    </div>
+      <InterviewEndedDialog isOpen={isInterviewEnded} />
+    </>
   );
 };
