@@ -5,6 +5,7 @@ export const APP_ROUTES = {
   INTERVIEW_SESSION: '/interview-session',
   HOME: '/',
   PROFILE: '/profile',
+  HELP: '/help',
 };
 
 Object.freeze(APP_ROUTES);

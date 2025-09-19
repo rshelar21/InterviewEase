@@ -1,6 +1,6 @@
 import { getUser } from '@/api/user/getUser';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, LogOut, User } from 'lucide-react';
+import { ChevronDown, HelpCircle, LogOut, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -55,6 +55,15 @@ export const UserInfoCard = async () => {
           <Link href={`${APP_ROUTES.PROFILE}`} className="flex w-full">
             <User className="mr-2 h-4 w-4" />
             Profile
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem asChild>
+          <Link href={`${APP_ROUTES.HELP}`} className="flex w-full">
+            <HelpCircle className="mr-2 h-4 w-4" />
+            Help & Support
           </Link>
         </DropdownMenuItem>
 

@@ -73,7 +73,7 @@ export const Sidebar = () => {
             <NavItem
               item={{
                 id: 'help',
-                label: 'Help',
+                label: 'Help & Support',
                 href: '/help',
                 icon: HelpCircle,
               }}
