@@ -181,7 +181,7 @@ export const InterviewCard = ({
           <TruncateText
             text={interview?.description}
             maxLength={130}
-            textClassName="text-muted-foreground line-clamp-3 text-sm leading-relaxed text-left"
+            textClassName="text-muted-foreground line-clamp-3 text-sm leading-relaxed text-left min-h-[70px] h-full"
           />
 
           <div className="flex items-center gap-1">

@@ -47,6 +47,7 @@ import {
   GalleryVerticalEnd,
   Columns3Cog,
   Pencil,
+  LoaderCircle,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
@@ -91,11 +92,12 @@ export function CreateInterviewDialog({
     queryFn: () => getResume('/resume/upload'),
     enabled: isOpen,
   });
-  const [isUploadResume, setIsUploadResume] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [isUploadResume, setIsUploadResume] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  // const [state, formAction, isPending] = useActionState(createInterview, undefined)
+
   const { pending } = useFormStatus();
 
   const form = useForm({
@@ -149,7 +151,11 @@ export function CreateInterviewDialog({
       setCurrentStep((prev) => prev + 1);
       return;
     }
-
+    if (!resumeData?.data?.id) {
+      toast.error('Please Upload Resume');
+      return;
+    }
+    setIsLoading(true);
     try {
       if (data?.id) {
         await updateInterview('/interview', {
@@ -188,6 +194,8 @@ export function CreateInterviewDialog({
       // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     } catch (err) {
       toast.error('Something went wrong');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -545,31 +553,33 @@ export function CreateInterviewDialog({
                         )}
                       </div>
 
-                      <div className="flex items-center md:justify-between">
-                        <div className="flex items-center gap-2 pt-2">
-                          <div className="bg-card h-fit w-fit rounded-full p-3">
-                            <FileText className="size-4 text-green-200" />
+                      {resumeData?.data?.id && (
+                        <div className="flex items-center md:justify-between">
+                          <div className="flex items-center gap-2 pt-2">
+                            <div className="bg-card h-fit w-fit rounded-full p-3">
+                              <FileText className="size-4 text-green-200" />
+                            </div>
+                            <Link
+                              href={resumeData?.data?.resumeUrl || ''}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              className="font-normal underline underline-offset-4"
+                            >
+                              {resumeData?.data?.name}
+                            </Link>
                           </div>
-                          <Link
-                            href={resumeData?.data?.resumeUrl || ''}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            className="font-normal underline underline-offset-4"
-                          >
-                            {resumeData?.data?.name}
-                          </Link>
-                        </div>
 
-                        <div>
-                          <Link
-                            href={APP_ROUTES.PROFILE}
-                            className="flex items-center gap-1 font-normal underline decoration-gray-100 underline-offset-4"
-                          >
-                            <Pencil className="size-4" />
-                            Edit
-                          </Link>
+                          <div>
+                            <Link
+                              href={APP_ROUTES.PROFILE}
+                              className="flex items-center gap-1 font-normal underline decoration-gray-100 underline-offset-4"
+                            >
+                              <Pencil className="size-4" />
+                              Edit
+                            </Link>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     {/* <div className="bg-primary/5 border-primary/20 rounded-lg border p-4">
@@ -619,9 +629,11 @@ export function CreateInterviewDialog({
                       {currentStep !== MAX_FORM_STEPS ? 'Next' : 'Create'}
 
                       {currentStep !== MAX_FORM_STEPS ? (
-                        <MoveRight className="h-4 w-4" />
+                        <MoveRight className="size-4" />
+                      ) : isLoading ? (
+                        <LoaderCircle className="size-4 animate-spin" />
                       ) : (
-                        <Sparkles className="h-4 w-4" />
+                        <Sparkles className="size-4" />
                       )}
                     </Button>
                   </div>
