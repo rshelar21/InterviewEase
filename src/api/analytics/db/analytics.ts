@@ -28,10 +28,7 @@ export async function getAnalyticsDetails() {
           gte: monthStart,
           lte: monthEnd,
         },
-        scheduledDate: {
-          gte: monthStart,
-          lte: monthEnd,
-        },
+
         status: {
           equals: 'COMPLETED',
         },

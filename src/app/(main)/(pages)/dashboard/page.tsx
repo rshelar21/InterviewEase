@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/common';
-import { Calendar, Goal } from 'lucide-react';
+import { Calendar, Clock, Goal } from 'lucide-react';
 import {
   RecentInterviews,
   UserPerformanceCard,
@@ -8,10 +8,13 @@ import {
 } from '@/components/dashboard';
 
 import { getAnalyticsDetails } from '@/api/analytics/db/analytics';
+import { avgDurationInSeconds } from '@/utils';
 
 const DashboardPage = async () => {
   const { totalInterviews, upcomingThisWeek, lastSixMonths } =
     await getAnalyticsDetails();
+
+  console.log(lastSixMonths);
 
   return (
     <div className="">
@@ -31,22 +34,21 @@ const DashboardPage = async () => {
             />
           </div>
 
-          {/* <div className="col-span-1">
-            <StatsCard
-              title="Avg. Duration"
-              description="Per session"
-              value={'42m'}
-              Icon={Clock}
-              trend="down"
-            />
-          </div> */}
-
           <div className="col-span-1">
             <StatsCard
               title="Upcoming"
               description="This week Scheduled"
               value={Number(upcomingThisWeek || 0)}
               Icon={Calendar}
+            />
+          </div>
+
+          <div className="col-span-1">
+            <StatsCard
+              title="Avg. Duration"
+              description="Per session"
+              value={`${avgDurationInSeconds(lastSixMonths)} min`}
+              Icon={Clock}
             />
           </div>
         </div>

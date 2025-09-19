@@ -90,7 +90,7 @@ export const InterviewSection = ({
   }, []);
 
   const handleGenerateFeedback = async (messages: SendMessage[]) => {
-    toast.loading('Generating feedback');
+    const t1 = toast.loading('Generating feedback');
     const data = await createFeedback({
       interviewId: interviewData?.id || '',
       transcript: messages,
@@ -98,6 +98,7 @@ export const InterviewSection = ({
     });
 
     if (data?.id) {
+      toast.dismiss(t1);
       router.push(`${APP_ROUTES.INTERVIEWS}/${interviewData?.id}/feedback`);
     }
   };

@@ -48,6 +48,7 @@ export const ResumeUploadDialog = ({
 
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [skipLoading, setSkipLoading] = useState(false);
 
   const handleFileDrop = useCallback((file: File[]) => {
     setFile(file[0]);
@@ -106,7 +107,7 @@ export const ResumeUploadDialog = ({
       onForcedClose?.();
       return;
     }
-    setIsLoading(true);
+    setSkipLoading(true);
     const t1 = toast.loading('Updating Preference');
     try {
       await updateUserPreference({
@@ -119,7 +120,7 @@ export const ResumeUploadDialog = ({
       toast.error('Something went wrong!');
     } finally {
       toast.dismiss(t1);
-      setIsLoading(false);
+      setSkipLoading(false);
     }
   };
 
@@ -160,7 +161,7 @@ export const ResumeUploadDialog = ({
               disabled={isLoading}
               size="lg"
             >
-              {isLoading ? (
+              {skipLoading ? (
                 <LoaderCircle className="size-4 animate-spin" />
               ) : (
                 <SkipForward className="size-4" />

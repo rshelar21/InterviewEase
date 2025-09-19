@@ -1,3 +1,5 @@
+import { Interview } from '@/types';
+
 export function formatTimeOnly(dateStr: Date) {
   const d = new Date(dateStr);
   const time = d.toLocaleTimeString('en-IN', {
@@ -21,4 +23,19 @@ export const formatTimer = (seconds: number) => {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+};
+
+export const toSeconds = (duration: string) => {
+  const [mm, ss] = duration.split(':').map(Number);
+  return mm * 60 + ss;
+};
+
+export const avgDurationInSeconds = (data: Partial<Interview>[]) => {
+  const totalTime =
+    data.reduce((acc, cur) => acc + toSeconds(cur?.duration || '00:00'), 0) /
+    data.length;
+
+  const avgDurationInMinutes = Math.round(totalTime / 60);
+
+  return avgDurationInMinutes;
 };

@@ -18,10 +18,10 @@ const months = [
   'Mar',
   'Apr',
   'May',
-  'June',
-  'July',
+  'Jun',
+  'Jul',
   'Aug',
-  'Sept',
+  'Sep',
   'Oct',
   'Nov',
   'Dec',
@@ -33,7 +33,7 @@ export const UserPerformanceCard = ({
   interviews: Partial<Interview>[];
 }) => {
   const chartData = useMemo(() => {
-    if (!interviews || interviews.length === 0) {
+    if (!interviews || interviews?.length === 0) {
       return months.map((m) => ({
         label: m,
         value: 0,
@@ -58,7 +58,7 @@ export const UserPerformanceCard = ({
         grouped[month] = { totalScore: 0, interviews: 0 };
       }
 
-      grouped[month].totalScore += interview.score ?? 0;
+      grouped[month].totalScore += interview?.score ?? 0;
       grouped[month].interviews += 1;
     });
 
