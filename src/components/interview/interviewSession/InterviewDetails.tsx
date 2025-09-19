@@ -91,7 +91,7 @@ export const InterviewDetails = ({
                 >
                   {
                     difficultyConfig[interview?.difficulty || 'ENTRY_LEVEL']
-                      .labelc
+                      .label
                   }
                 </Badge>
               </div>
