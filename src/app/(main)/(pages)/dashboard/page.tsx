@@ -13,7 +13,6 @@ const DashboardPage = async () => {
   const { totalInterviews, upcomingThisWeek, lastSixMonths } =
     await getAnalyticsDetails();
 
-  // console.log(totalInterviews, upcomingThisWeek, lastSixMonths);
   return (
     <div className="">
       <PageHeading
@@ -25,11 +24,10 @@ const DashboardPage = async () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="col-span-1">
             <StatsCard
-              title="Total Interviews"
+              title="Total Completed Interviews"
               description="This month"
               value={Number(totalInterviews || 0)}
               Icon={Goal}
-              trend="up"
             />
           </div>
 
@@ -46,10 +44,9 @@ const DashboardPage = async () => {
           <div className="col-span-1">
             <StatsCard
               title="Upcoming"
-              description="Scheduled"
+              description="This week Scheduled"
               value={Number(upcomingThisWeek || 0)}
               Icon={Calendar}
-              trend="neutral"
             />
           </div>
         </div>

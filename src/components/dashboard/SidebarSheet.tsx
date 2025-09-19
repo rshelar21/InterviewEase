@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Sheet,
   SheetContent,
@@ -62,6 +63,12 @@ export const SidebarSheet = ({ onOpenChange, open }: Props) => {
 
 export const SidebarSheetButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   return (
     <div className="flex lg:hidden">
       <Button

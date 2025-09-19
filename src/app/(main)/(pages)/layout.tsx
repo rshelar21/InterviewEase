@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sidebar, TopNavbar } from '@/components/dashboard';
-import { ResumeUploadDialog } from '@/components/common';
+import { ResumeUploadDialog } from '@/components/interview';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,8 +9,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <Sidebar />
         <div className="w-full flex-1 overflow-y-scroll">
           <TopNavbar />
-          {/* px-8 pb-8 */}
-          <main className="px-8 pb-8">{children}</main>
+
+          <main className="px-6 pb-6 md:px-8 md:pb-8">{children}</main>
         </div>
         <ResumeUploadDialog />
       </div>

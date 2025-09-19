@@ -29,7 +29,7 @@ export function CustomAreaChart({ data }: Props) {
   return (
     <ChartContainer config={chartConfig} className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
+        <AreaChart data={data} className="w-full">
           <defs>
             <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
               <stop

@@ -20,6 +20,7 @@ export const TopNavbar = async () => {
               width={100}
               height={150}
               className="block flex-shrink-0 object-cover"
+              priority
             />
 
             <span className="-ml-6 text-xl font-semibold text-gray-900 transition-opacity duration-200 hover:opacity-80 dark:text-white">

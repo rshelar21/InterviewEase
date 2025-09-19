@@ -10,17 +10,40 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { FileUploader } from './FileUploader';
+import { FileUploader } from '../common/FileUploader';
 import { toast } from 'sonner';
 import { getResume, getSignUrl, uploadResume } from '@/api/interview';
-import { LoaderCircle, Save } from 'lucide-react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { LoaderCircle, Save, SkipForward } from 'lucide-react';
+import { useQueries, useQueryClient } from '@tanstack/react-query';
+import { getUserDetails } from '@/api/user/user';
+import { updateUserPreference } from '@/actions';
 
-export const ResumeUploadDialog = () => {
-  const { data, isLoading: loading } = useQuery({
-    queryKey: ['resume'],
-    queryFn: () => getResume('/resume/upload'),
+interface ResumeUploadDialogProps {
+  isForceOpen?: boolean;
+  onForcedClose?: () => void;
+}
+
+export const ResumeUploadDialog = ({
+  isForceOpen = false,
+  onForcedClose,
+}: ResumeUploadDialogProps) => {
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ['user'],
+        queryFn: () => getUserDetails('/user'),
+      },
+      {
+        queryKey: ['resume'],
+        queryFn: () => getResume('/resume/upload'),
+      },
+    ],
   });
+
+  const userData = results[0].data;
+  const resumeData = results[1].data;
+  const loading = results[0].isLoading || results[1].isLoading;
+
   const queryClient = useQueryClient();
 
   const [file, setFile] = useState<File | null>(null);
@@ -78,7 +101,29 @@ export const ResumeUploadDialog = () => {
     }
   };
 
-  if (data?.data?.id || loading) return null;
+  const handleSkipUpload = async (): Promise<void> => {
+    if (isForceOpen) {
+      onForcedClose?.();
+      return;
+    }
+    try {
+      await updateUserPreference({
+        resumeSkipped: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+    } catch (err) {
+      toast.error('Something went wrong!');
+    }
+  };
+
+  if (
+    resumeData?.data?.id ||
+    loading ||
+    (userData?.data?.resumeSkipped && !isForceOpen)
+  )
+    return null;
 
   return (
     <Dialog open>
@@ -102,20 +147,30 @@ export const ResumeUploadDialog = () => {
           <div className="pt-4 pb-6">
             <FileUploader onDrop={handleFileDrop} />
           </div>
-          <DialogFooter className="">
+          <DialogFooter className="flex items-center gap-2">
             <Button
               variant="outline"
-              className="w-full"
+              // className="w-full"
+              onClick={handleSkipUpload}
+              disabled={isLoading}
+              size="lg"
+            >
+              <SkipForward />
+              Skip for now
+            </Button>
+            <Button
+              variant="default"
+              // className="w-full"
               onClick={handleSubmit}
               disabled={isLoading}
               size="lg"
             >
-              Submit
               {isLoading ? (
                 <LoaderCircle className="size-4 animate-spin" />
               ) : (
                 <Save className="size-4" />
               )}
+              Submit
             </Button>
           </DialogFooter>
         </div>

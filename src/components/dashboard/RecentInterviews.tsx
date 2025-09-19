@@ -100,6 +100,9 @@ export const RecentInterviews = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          {interviews?.length === 0 && (
+            <p className="text-center">No Data found!</p>
+          )}
           {interviews?.map((item) => (
             <RecentInterviewCard interview={item} key={item.id} />
           ))}

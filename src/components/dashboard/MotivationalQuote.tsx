@@ -32,7 +32,7 @@ export function MotivationalQuote() {
   }, []);
 
   return (
-    <Card>
+    <Card className="h-full min-h-[215px]">
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
           <Quote className="text-primary mt-1 h-8 w-8 flex-shrink-0" />

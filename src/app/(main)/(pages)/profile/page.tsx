@@ -30,7 +30,7 @@ const ProfilePage = async () => {
 
       <div>
         <Card>
-          <CardContent className="flex items-start gap-4">
+          <CardContent className="flex flex-col items-start gap-4 lg:flex-row">
             <div className="bg-background/30 border-border h-fit w-fit rounded-full border p-1.5">
               <Avatar className="size-24">
                 <AvatarImage
@@ -46,7 +46,7 @@ const ProfilePage = async () => {
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-gray-300">{user?.name}</h1>
 
-              <div className="flex items-start gap-4">
+              <div className="flex flex-wrap items-start gap-2 md:gap-4">
                 <div className="flex items-center gap-2 py-1 text-gray-400">
                   <Mail className="size-4" />
                   <span>{user?.email}</span>

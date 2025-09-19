@@ -2,14 +2,12 @@ import React from 'react';
 import { LucideProps } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown } from 'lucide-react';
 
 export const StatsCard = ({
   title,
   description,
   value,
   Icon,
-  trend,
 }: {
   title: string;
   description: string | React.ReactNode;
@@ -17,7 +15,6 @@ export const StatsCard = ({
   Icon: React.ForwardRefExoticComponent<
     Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >;
-  trend?: 'up' | 'down' | 'neutral';
 }) => {
   return (
     <Card className="relative gap-4 overflow-hidden">
@@ -33,21 +30,7 @@ export const StatsCard = ({
         <div className="text-4xl font-bold">{value}</div>
 
         <div className="flex items-center gap-2">
-          {trend === 'up' && (
-            <Badge variant="secondary" className="bg-green-200 text-green-700">
-              <TrendingUp className="mr-1 h-3 w-3" />
-              12
-            </Badge>
-          )}
-          {trend === 'down' && (
-            <Badge variant="secondary" className="bg-red-200 text-red-700">
-              <TrendingDown className="mr-1 h-3 w-3" />
-              10
-            </Badge>
-          )}
-          {trend === 'neutral' && <Badge variant="outline">This week</Badge>}
-          <span className="text-muted-foreground text-xs">{description}</span>
-          {/* <p className="text-muted-foreground mt-1 text-xs">{description}</p> */}
+          <Badge variant="outline">{description}</Badge>
         </div>
       </CardContent>
     </Card>

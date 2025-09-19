@@ -52,16 +52,13 @@ export const UserInfoCard = async () => {
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link href={`${APP_ROUTES.PROFILE}`} className="flex w-full">
               <User className="mr-2 h-4 w-4" />
               Profile
             </Link>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
-          </DropdownMenuItem> */}
+
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-red-600">
             <div className="w-full">

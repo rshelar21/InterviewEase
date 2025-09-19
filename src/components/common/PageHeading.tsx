@@ -23,7 +23,12 @@ export const PageHeading = ({
   return (
     <div className="pt-10 pb-10">
       {!!breadcrumbs?.length && <BreadCrumbsList breadcrumbs={breadcrumbs} />}
-      <div className={cn('flex justify-between', className)}>
+      <div
+        className={cn(
+          'flex flex-col justify-between gap-4 md:flex-row',
+          className
+        )}
+      >
         <div>
           {typeof title === 'string' ? (
             <h1 className="text-3xl font-semibold">{title}</h1>

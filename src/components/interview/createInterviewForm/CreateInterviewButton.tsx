@@ -11,7 +11,7 @@ export const CreateInterviewButton = () => {
       <Button
         size="lg"
         className="gap-2"
-        variant="outline"
+        variant="default"
         onClick={() => setIsOpen(true)}
       >
         <Plus className="h-5 w-5" />

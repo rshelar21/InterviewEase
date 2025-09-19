@@ -125,38 +125,6 @@ export async function POST(request: NextRequest) {
       ? `You are an experienced hiring manager at ${companyName}, interviewing a candidate for the ${title} position.`
       : `You are an experienced hiring manager, interviewing a candidate for the ${title} position.`;
 
-    // const prompt = `
-    //   ${persona}
-
-    //   Here is all the context you have:
-    //   - **Candidate Resume Data:**
-    //     ${JSON.stringify(resumeData, null, 2)}
-
-    //   - **Job Description:**
-    //     ${jobDescription || 'N/A'}
-
-    //   - **Interviewer's Notes:**
-    //     ${description || 'N/A'}
-
-    //   - **Interview Details:**
-    //     - Type: ${interviewType}
-    //     - Difficulty: ${difficulty}
-
-    //   Your task is to generate a list of 5-7 interview questions.
-
-    //   ${promptInstructions}
-
-    //   Your task is to generate a list of 10 or fewer interview questions tailored to the candidate's profile and the job context.
-
-    //   The questions should be a mix of the specified type (${interviewType}) and difficulty (${difficulty}).
-
-    //   IMPORTANT: Return ONLY a valid JSON array of strings. Do not include any other text, explanations, or Markdown.
-
-    //   The questions are going to be read by AI VOICE assistant so do not use "/" or "*" or any other special characters which might break the voice assistance
-
-    //   Example: ["Question 1", "Question 2", "Question 3"]
-    //   `;
-
     const prompt = `
       ${persona}
 

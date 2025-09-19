@@ -5,3 +5,4 @@ export {
   InterviewsList,
   InterviewCardSkeleton,
 } from './interviewList/InterviewsList';
+export { ResumeUploadDialog } from './ResumeUploadDialog';

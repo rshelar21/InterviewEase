@@ -12,12 +12,35 @@ import { CustomAreaChart } from '@/components/common';
 import { Interview } from '@/types';
 import { format } from 'date-fns';
 
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sept',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 export const UserPerformanceCard = ({
   interviews,
 }: {
   interviews: Partial<Interview>[];
 }) => {
   const chartData = useMemo(() => {
+    if (!interviews || interviews.length === 0) {
+      return months.map((m) => ({
+        label: m,
+        value: 0,
+        interviews: 0,
+      }));
+    }
+
     const grouped: Record<string, { totalScore: number; interviews: number }> =
       {};
 
@@ -39,14 +62,16 @@ export const UserPerformanceCard = ({
       grouped[month].interviews += 1;
     });
 
-    return Object.entries(grouped).map(([month, stats]) => ({
-      label: month,
-      value: stats.totalScore / stats.interviews, // avg score
-      interviews: stats.interviews,
-    }));
-  }, [interviews]); // recompute only when rawData changes
+    return months.map((m) => {
+      const stats = grouped[m];
+      return {
+        label: m,
+        value: stats ? stats.totalScore / stats.interviews : 0,
+        interviews: stats ? stats.interviews : 0,
+      };
+    });
+  }, [interviews]);
 
-  // console.log(chartData)
   return (
     <Card className="relative overflow-hidden">
       <CardHeader className="">
@@ -57,7 +82,7 @@ export const UserPerformanceCard = ({
           Your interview performance and activity over the last 6 months
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-3">
         <CustomAreaChart data={chartData} />
       </CardContent>
     </Card>
