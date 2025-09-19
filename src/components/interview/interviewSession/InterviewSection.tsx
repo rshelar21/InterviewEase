@@ -157,7 +157,10 @@ export const InterviewSection = ({
       {/* header */}
 
       <div className="">
-        <InterviewSessionHeader sessionTime={sessionTime} />
+        <InterviewSessionHeader
+          sessionTime={sessionTime}
+          interview={interviewData}
+        />
       </div>
       {/* users cards */}
       <div className="flex-1 px-6 lg:px-0">

@@ -19,7 +19,7 @@ export const TruncateText = ({
 }: ITruncateTextProps) => {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <p className={cn(textClassName)}>
           {text?.length > maxLength ? `${text.slice(0, maxLength)}...` : text}
         </p>

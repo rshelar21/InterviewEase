@@ -52,28 +52,31 @@ export const NotificationMenu = () => {
             </p>
           </DropdownMenuItem>
         )}
-        {data?.data?.map((item) => (
-          <React.Fragment key={item?.id}>
-            <DropdownMenuItem asChild>
-              <Link
-                href={`${APP_ROUTES.INTERVIEW_SESSION}/${item?.id}`}
-                className="flex w-full"
-              >
-                <MessagesSquare className="mr-2 size-4" />
-                <div>
-                  <p>{item?.title}</p>
-                  {item.scheduledDate && (
-                    <p className="text-muted-foreground font-normal">
-                      {format(item?.scheduledDate, 'dd, MMM')} -{' '}
-                      {formatDistanceToNow(item?.scheduledDate)}
-                    </p>
-                  )}
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </React.Fragment>
-        ))}
+        {data?.data?.map((item, index) => {
+          const isLastEle = data?.data?.length - 1 === index;
+          return (
+            <React.Fragment key={item?.id}>
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`${APP_ROUTES.INTERVIEW_SESSION}/${item?.id}`}
+                  className="flex w-full"
+                >
+                  <MessagesSquare className="mr-2 size-4" />
+                  <div>
+                    <p>{item?.title}</p>
+                    {item.scheduledDate && (
+                      <p className="text-muted-foreground font-normal">
+                        {format(item?.scheduledDate, 'dd, MMM')} -{' '}
+                        {formatDistanceToNow(item?.scheduledDate)}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              {!isLastEle && <DropdownMenuSeparator />}
+            </React.Fragment>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
