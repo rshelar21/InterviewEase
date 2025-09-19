@@ -272,10 +272,10 @@ const FeedbackPage = async ({
                       Strengths
                     </h4>
 
-                    <div className="space-y-2 space-x-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {feedback?.strengths?.map((item: string) => (
                         <Badge
-                          className="border-green-300 bg-green-100 text-xs"
+                          className="border-green-300 bg-green-100 text-xs whitespace-normal"
                           key={item}
                         >
                           {item}
@@ -302,11 +302,11 @@ const FeedbackPage = async ({
                         interview.
                       </div>
                     )}
-                    <div className="space-y-2 space-x-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {feedback?.improvements?.map((item: string) => (
                         <Badge
                           variant="destructive"
-                          className="text-xs"
+                          className="text-xs whitespace-normal"
                           key={item}
                         >
                           {item}
