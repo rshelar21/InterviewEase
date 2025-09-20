@@ -33,6 +33,7 @@ import { formatDateOnly } from '@/utils';
 import { TruncateText } from '@/components/common';
 import { CommonTooltip } from '@/components/common';
 import { difficultyConfig, statusConfig, interviewTypeConfig } from '@/utils';
+import { toast } from 'sonner';
 
 interface InterviewCardProps {
   interview: Interview;
@@ -46,10 +47,15 @@ export const InterviewCard = ({
   const queryClient = useQueryClient();
 
   const handleDelete = async (): Promise<void> => {
-    await deleteInterview(interview?.id);
-    queryClient.invalidateQueries({
-      queryKey: ['interview'],
-    });
+    try {
+      await deleteInterview(interview?.id);
+      queryClient.invalidateQueries({
+        queryKey: ['interview'],
+      });
+      toast.success('Interview Delete successfully');
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
 
   return (

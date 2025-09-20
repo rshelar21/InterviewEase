@@ -1,1 +1,1 @@
-export { UserResumeSection } from './UserResumeSection';
+export { ProfileCard, ProfileCardSkeleton } from './ProfileCard';

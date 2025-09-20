@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import { generateObject } from 'ai';
 import { google } from '@ai-sdk/google';
 import { z } from 'zod';
@@ -15,16 +15,15 @@ export async function GET() {
     });
     return NextResponse.json({
       data: res,
+      success: true,
+      message: 'Resume fetched successfully',
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to fetch resume' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: error.message || 'Failed to get resume',
+    });
   }
 }
 
@@ -81,19 +80,13 @@ export async function POST(request: NextRequest) {
     const pdf_url = searchParams.get('pdf_url');
 
     if (!pdf_url) {
-      return NextResponse.json(
-        { error: 'No PDF URL provided.' },
-        { status: 400 }
-      );
+      throw new Error('No PDF URL provided');
     }
 
     // --- Fetch the PDF content from the URL ---
     const response = await fetch(pdf_url);
     if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch PDF from URL: ${response.statusText}` },
-        { status: response.status }
-      );
+      throw new Error('Failed to fetch PDF from URL');
     }
 
     // Get the file content as an ArrayBuffer
@@ -103,10 +96,7 @@ export async function POST(request: NextRequest) {
     const result = await generateObject({
       model: google('gemini-1.5-flash'),
       schema: resumeSchema,
-      // prompt: `
-      //   Analyze the provided resume PDF and extract the following information: work experience, skills, and education details.
-      //   Strictly adhere to the provided JSON schema.
-      // `,
+
       messages: [
         {
           role: 'user',
@@ -125,29 +115,45 @@ export async function POST(request: NextRequest) {
       ],
     });
 
-    const newResume = await prisma.reusme.create({
-      data: {
-        content: result.object,
-        name: fileName,
-        resumeUrl: pdf_url,
-        userId: session?.user?.id || '',
+    const hasResume = await prisma.reusme.findUnique({
+      where: {
+        userId: session?.user?.id,
       },
     });
 
+    if (hasResume) {
+      await prisma.reusme.update({
+        where: {
+          userId: session?.user?.id,
+        },
+        data: {
+          content: result.object,
+          name: fileName,
+          resumeUrl: pdf_url,
+          userId: session?.user?.id || '',
+        },
+      });
+    } else {
+      await prisma.reusme.create({
+        data: {
+          content: result.object,
+          name: fileName,
+          resumeUrl: pdf_url,
+          userId: session?.user?.id || '',
+        },
+      });
+    }
+
     return NextResponse.json({
       message: 'Resume data extracted and saved successfully.',
-      data: result,
-      resume: newResume,
+      success: true,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to process resume.' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: error.message || 'Failed to create resume',
+    });
   }
 }

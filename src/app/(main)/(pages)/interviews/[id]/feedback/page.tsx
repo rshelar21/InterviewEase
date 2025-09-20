@@ -1,4 +1,4 @@
-import { getInterviewFeedback } from '@/api/interview';
+import { getInterviewFeedback } from '@/data/interview';
 import {
   Star,
   Calendar,

@@ -1,21 +1,36 @@
 'use server';
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import prisma from '@/lib/db';
 import { CreateContactsType } from '@/types';
+import { tryCatch } from '@/lib/try-catch';
 
-export async function createSupportQuery(data: CreateContactsType) {
-  const session = await getUser();
+export async function createSupportQuery(body: CreateContactsType) {
+  const { data, error } = await tryCatch(async () => {
+    const session = await getUser();
 
-  const contact = await prisma.contact.create({
-    data: {
-      description: data?.description,
-      subject: data?.subject,
-      userId: session?.user?.id || '',
-    },
+    const user = await prisma.user.findUnique({
+      where: { id: session?.user?.id },
+    });
+
+    if (!user) {
+      throw new Error('User does not exist');
+    }
+
+    return await prisma.contact.create({
+      data: {
+        description: body?.description,
+        subject: body?.subject,
+        userId: user?.id as string,
+      },
+    });
   });
 
-  return {
-    success: true,
-    contact,
-  };
+  if (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Something went wrong, Please try again';
+    throw new Error(message);
+  }
+  return data;
 }

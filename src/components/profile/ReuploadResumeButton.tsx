@@ -1,17 +1,16 @@
 'use client';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { deleteResume } from '@/actions';
-import { useQueryClient } from '@tanstack/react-query';
 
-export const ReuploadResumeButton = () => {
-  const queryClient = useQueryClient();
+interface Props {
+  onOpen: () => void;
+}
+
+export const ReuploadResumeButton = ({ onOpen }: Props) => {
   const handleReupload = async () => {
-    await deleteResume();
-    queryClient.invalidateQueries({
-      queryKey: ['resume'],
-    });
+    onOpen();
   };
+
   return (
     <Button className="col-span-2" variant="default" onClick={handleReupload}>
       <Upload />

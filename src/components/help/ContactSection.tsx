@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { BookOpenText, LoaderCircle, NotebookText, Send } from 'lucide-react';
@@ -38,12 +37,14 @@ export const ContactSection = () => {
 
   async function handleFormSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+
     try {
       await createSupportQuery(values);
-      form.reset();
       toast.success('Message Submitted');
+
+      form.reset();
     } catch (error) {
-      toast.error('Something went wrong, Please try again');
+      toast.error((error as Error).message);
     } finally {
       setLoading(false);
     }

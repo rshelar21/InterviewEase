@@ -1,6 +1,6 @@
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import { InterviewSection } from '@/components/interview';
-import { getIntervieDetails } from '@/api/interview';
+import { getIntervieDetails } from '@/data/interview';
 
 export default async function InterviewSessionPage({
   params,
@@ -12,13 +12,11 @@ export default async function InterviewSessionPage({
   const session = await getUser();
 
   return (
-    <>
-      <InterviewSection
-        interviewData={interview}
-        userName={session?.user?.name || ''}
-        userImg={session?.user?.image || ''}
-        userId={session?.user?.id || ''}
-      />
-    </>
+    <InterviewSection
+      interviewData={interview}
+      userName={session?.user?.name || ''}
+      userImg={session?.user?.image || ''}
+      userId={session?.user?.id || ''}
+    />
   );
 }

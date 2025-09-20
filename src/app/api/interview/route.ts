@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import { generateObject } from 'ai';
 import { google } from '@ai-sdk/google';
 import { z } from 'zod';
@@ -44,16 +44,15 @@ export async function GET(req: NextRequest) {
         previoudPage,
         hasNextPage,
       },
+      success: true,
+      message: 'Interview fetched successfully',
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to fetch interviews' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      message: error.message || 'Failed to fetch interviews',
+      success: false,
+    });
   }
 }
 
@@ -184,16 +183,15 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       data: newInterview,
+      success: true,
+      message: 'Interview created successfully',
     });
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to create interview.' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      message: error.message || 'Failed to create interviews',
+      success: false,
+    });
   }
 }
 
@@ -318,15 +316,14 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({
       data: updatedInterview,
+      success: true,
+      message: 'Interview updated successfully',
     });
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to create interview.' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: error.message || 'Failed to update interview',
+    });
   }
 }

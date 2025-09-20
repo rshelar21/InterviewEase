@@ -1,3 +1,4 @@
+import prisma from '@/lib/db';
 import { auth } from '@/lib/auth';
 import { cache } from 'react';
 
@@ -12,3 +13,18 @@ export const getUser = cache(async () => {
   }
   return session;
 });
+
+export async function getUserInfo() {
+  const session = await getUser();
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user?.id,
+    },
+    include: {
+      Reusme: true,
+    },
+  });
+
+  return user;
+}

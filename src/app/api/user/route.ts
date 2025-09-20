@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 
 export async function GET() {
   try {
@@ -16,16 +16,15 @@ export async function GET() {
 
     return NextResponse.json({
       data: user,
+      success: true,
+      message: 'User fetched successfully',
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return NextResponse.json(
-      { error: 'Failed to fetch interviews' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: error.message || 'Failed to fetch user',
+    });
   }
 }

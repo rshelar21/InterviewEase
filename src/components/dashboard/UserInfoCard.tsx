@@ -1,4 +1,4 @@
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, HelpCircle, LogOut, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

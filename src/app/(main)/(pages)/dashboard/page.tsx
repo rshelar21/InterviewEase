@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getUser } from '@/api/user/getUser';
+import { getUser } from '@/data/user';
 import { PageHeading } from '@/components/common';
 import { DashboardStats, DashboardStatsSkeleton } from '@/components/dashboard';
 

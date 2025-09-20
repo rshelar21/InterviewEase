@@ -1,6 +1,6 @@
-export { getInterviews } from './getInterview';
+export * from './getInterview';
 export * from './uploadResume';
 export * from './getResume';
 export * from './postInterview';
-export * from './db/getIntervieDetails';
 export * from './getInterviewNofications';
+export * from './updateInterview';

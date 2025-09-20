@@ -63,7 +63,9 @@ export const UserResumeSection = () => {
                       fileName={data?.data?.name || ''}
                       url={data?.data?.resumeUrl || ''}
                     />
-                    <ReuploadResumeButton />
+                    <ReuploadResumeButton
+                      onOpen={() => setIsUploadResume(true)}
+                    />
                   </div>
                 </div>
               </>

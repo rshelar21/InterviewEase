@@ -5,7 +5,7 @@ interface ServerResponse {
   data: Interview;
 }
 
-export async function postInterview(
+export async function updateInterview(
   endpoint: string,
   config?: {
     method: string;

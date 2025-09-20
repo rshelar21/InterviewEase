@@ -1,30 +1,18 @@
-import React from 'react';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import {
-  CalendarIcon,
-  Building2,
-  Briefcase,
   FileText,
-  Sparkles,
   MoveRight,
-  MoveLeft,
-  File,
-  GalleryVerticalEnd,
-  Columns3Cog,
-  Pencil,
   LoaderCircle,
   Brain,
   TrendingUp,
   Lightbulb,
   Target,
-  AirVent,
 } from 'lucide-react';
 
 interface InterviewEndedProps {
@@ -88,7 +76,7 @@ export const InterviewEndedDialog = ({ isOpen }: InterviewEndedProps) => {
             <MoveRight className="size-4" />
           </div>
           <div className="space-y-3">
-            {feedbackSteps.map((step, index) => (
+            {feedbackSteps.map((step) => (
               <div
                 key={step.id}
                 className="bg-card flex animate-pulse items-center space-x-3 rounded-lg p-2.5 transition-all duration-300"

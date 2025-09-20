@@ -1,5 +1,5 @@
 import { Calendar, Clock, Goal } from 'lucide-react';
-import { getAnalyticsDetails } from '@/api/analytics/db/analytics';
+import { getAnalyticsDetails } from '@/data/dashboard';
 import { avgDurationInSeconds } from '@/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';

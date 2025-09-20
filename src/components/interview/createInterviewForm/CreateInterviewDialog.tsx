@@ -60,7 +60,6 @@ import {
   FORM_THIRD_FORM_SCHEMA,
   FORM_STEPS,
 } from './createInterviewForm.utils';
-// import { createInterview, updateInterview } from '@/actions';
 import { useFormStatus } from 'react-dom';
 import { Interview } from '@/types';
 import { toast } from 'sonner';
