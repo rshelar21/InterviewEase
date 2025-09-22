@@ -48,7 +48,7 @@ export const NotificationMenu = () => {
         {data?.data?.length === 0 && (
           <DropdownMenuItem>
             <p className="text-muted-foreground font-normal">
-              No Noficiations!
+              No notification!
             </p>
           </DropdownMenuItem>
         )}
