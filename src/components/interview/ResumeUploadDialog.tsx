@@ -140,7 +140,7 @@ export const ResumeUploadDialog = ({
   };
 
   return (
-    <Dialog open={open || isForceOpen} onOpenChange={setOpen}>
+    <Dialog open={open || isForceOpen}>
       <DialogContent
         className="gap-0 px-0 sm:max-w-[550px]"
         showCloseButton={false}
