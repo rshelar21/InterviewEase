@@ -116,24 +116,29 @@ export const InterviewSection = ({
   }, [messages, callStatus, userId]);
 
   const handleCallStart = async () => {
-    const t1 = toast.loading('Starting your interview');
-
+    const t1 = toast.loading('Starting your interview...');
     setCallStatus(CallStatus.CONNECTING);
 
-    let formattedQuestions = '';
-    const questions = interviewData?.questions;
-    if (questions) {
-      formattedQuestions = questions
-        .map((question: string) => `- ${question}`)
+    try {
+      const questions = interviewData?.questions ?? [];
+      const formattedQuestions = questions
+        .map((q: string) => `- ${q}`)
         .join('\n');
-    }
 
-    vapi.start(interviewer, {
-      variableValues: {
-        questions: formattedQuestions,
-      },
-    });
-    toast.dismiss(t1);
+      await vapi.start(interviewer, {
+        variableValues: {
+          questions: formattedQuestions,
+        },
+      });
+
+      toast.success('Interview started successfully!');
+    } catch (error) {
+      console.error('Failed to start interview:', error);
+
+      toast.error('Failed to start interview. Please try again.');
+    } finally {
+      toast.dismiss(t1);
+    }
   };
 
   const handleDisconnectCall = () => {
