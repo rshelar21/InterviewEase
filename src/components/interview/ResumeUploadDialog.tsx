@@ -12,9 +12,9 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { FileUploader } from '../common/FileUploader';
 import { toast } from 'sonner';
-import { getSignUrl, uploadResume } from '@/api/interview';
+import { getResume, getSignUrl, uploadResume } from '@/api/interview';
 import { LoaderCircle, Save, SkipForward } from 'lucide-react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueries, useQueryClient } from '@tanstack/react-query';
 import { getUserDetails } from '@/api/user/user';
 import { updateUserPreference } from '@/actions';
 
@@ -27,10 +27,22 @@ export const ResumeUploadDialog = ({
   isForceOpen = false,
   onForcedClose,
 }: ResumeUploadDialogProps) => {
-  const { data, isLoading: loading } = useQuery({
-    queryKey: ['user'],
-    queryFn: () => getUserDetails('/user'),
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ['user'],
+        queryFn: () => getUserDetails('/user'),
+      },
+      {
+        queryKey: ['resume'],
+        queryFn: () => getResume('/resume/upload'),
+      },
+    ],
   });
+
+  const userData = results[0].data;
+  const resumeData = results[1].data;
+  const loading = results[0].isLoading || results[1].isLoading;
 
   const queryClient = useQueryClient();
 
@@ -41,12 +53,13 @@ export const ResumeUploadDialog = ({
 
   useEffect(() => {
     if (!loading) {
-      const skipped = Boolean(data?.data?.resumeSkipped);
-      if (!skipped) {
+      const skipped = Boolean(userData?.data?.resumeSkipped);
+      const hasResume = Boolean(resumeData?.data?.id);
+      if (!skipped && !hasResume) {
         setOpen(true);
       }
     }
-  }, [loading, data]);
+  }, [loading, userData, resumeData]);
 
   const handleFileDrop = useCallback((file: File[]) => {
     setFile(file[0]);

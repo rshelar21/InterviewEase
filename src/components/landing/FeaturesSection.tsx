@@ -7,46 +7,46 @@ import {
 } from '@/components/ui/card';
 import { Brain, Target, TrendingUp, Users, Zap, Shield } from 'lucide-react';
 
-export function FeaturesSection() {
-  const features = [
-    {
-      icon: Brain,
-      title: 'AI-Powered Coaching',
-      description:
-        'Get personalized feedback and coaching from our advanced AI that analyzes your responses in real-time.',
-    },
-    {
-      icon: Target,
-      title: 'Industry-Specific Prep',
-      description:
-        'Practice with questions tailored to your industry and role, from tech to finance to healthcare.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Performance Analytics',
-      description:
-        'Track your progress with detailed analytics and insights to identify areas for improvement.',
-    },
-    {
-      icon: Users,
-      title: 'Mock Interviews',
-      description:
-        'Practice with realistic mock interviews that simulate real interview conditions and scenarios.',
-    },
-    {
-      icon: Zap,
-      title: 'Instant Feedback',
-      description:
-        'Receive immediate feedback on your answers, body language, and communication skills.',
-    },
-    {
-      icon: Shield,
-      title: 'Confidence Building',
-      description:
-        'Build confidence through repeated practice and positive reinforcement from our AI coach.',
-    },
-  ];
+const features = [
+  {
+    icon: Brain,
+    title: 'AI-Powered Coaching',
+    description:
+      'Get personalized feedback and coaching from our advanced AI that analyzes your responses in real-time.',
+  },
+  {
+    icon: Target,
+    title: 'Industry-Specific Prep',
+    description:
+      'Practice with questions tailored to your industry and role, from tech to finance to healthcare.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Performance Analytics',
+    description:
+      'Track your progress with detailed analytics and insights to identify areas for improvement.',
+  },
+  {
+    icon: Users,
+    title: 'Mock Interviews',
+    description:
+      'Practice with realistic mock interviews that simulate real interview conditions and scenarios.',
+  },
+  {
+    icon: Zap,
+    title: 'Instant Feedback',
+    description:
+      'Receive immediate feedback on your answers, body language, and communication skills.',
+  },
+  {
+    icon: Shield,
+    title: 'Confidence Building',
+    description:
+      'Build confidence through repeated practice and positive reinforcement from our AI coach.',
+  },
+];
 
+export function FeaturesSection() {
   return (
     <section id="features" className="bg-background py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

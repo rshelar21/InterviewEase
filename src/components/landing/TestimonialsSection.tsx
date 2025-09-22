@@ -49,9 +49,9 @@ export function TestimonialsSection() {
             // gradient={true}
             // gradientColor="#0e0e13"
             // gradientWidth={10}
-            className="relative z-50 mx-auto h-full min-h-[150px] w-full"
+            className="relative mx-auto h-full min-h-[150px] w-full"
           >
-            <div className="flex gap-x-7">
+            <div className="flex items-center gap-7">
               {testimonials.map((testimonial, index) => (
                 <div key={index} className="w-full max-w-[450px] flex-shrink-0">
                   <Card className="border-border">

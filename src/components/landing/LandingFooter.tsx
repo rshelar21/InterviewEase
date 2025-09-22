@@ -37,7 +37,7 @@ export function LandingFooter() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="#"
+                  href="#features"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Features
@@ -45,7 +45,7 @@ export function LandingFooter() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#pricing"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Pricing
@@ -53,18 +53,10 @@ export function LandingFooter() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#testimonials"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  API
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Integrations
+                  Testimonials
                 </a>
               </li>
             </ul>
@@ -124,7 +116,7 @@ export function LandingFooter() {
 
         <div className="border-border mt-12 flex flex-col items-center justify-between border-t pt-8 md:flex-row">
           <p className="text-muted-foreground text-sm">
-            © 2024 InterviewEase. All rights reserved.
+            © 2025 InterviewEase. All rights reserved.
           </p>
           <div className="mt-4 flex space-x-6 md:mt-0">
             <a

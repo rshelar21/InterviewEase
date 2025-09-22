@@ -78,7 +78,7 @@ const AuthPage = async () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Briefcase className="h-4 w-4" />
-                <span className="text-xs">500+ companies</span>
+                <span className="text-xs">50K+ interviews</span>
               </div>
             </div>
             <p className="text-muted-foreground text-xs">
